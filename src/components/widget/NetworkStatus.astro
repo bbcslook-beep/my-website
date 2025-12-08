@@ -1,0 +1,105 @@
+---
+import WidgetLayout from "./WidgetLayout.astro";
+
+// ⚙️ 在此处配置你的线路
+const servers = [
+	{
+		name: "Cloudflare 全球",
+		url: "https://072145.xyz",
+		id: "cf",
+	},
+	{
+		name: "源站直连",
+		url: "http://154.36.164.69",
+		id: "origin",
+	},
+	{
+		name: "本地调试",
+		url: "http://localhost:4321",
+		id: "local",
+	},
+];
+---
+
+<WidgetLayout name="线路切换" id="network-status" isCollapsed={false}>
+    <div class="flex flex-col gap-2">
+        {servers.map((server) => (
+            <a href={server.url} 
+               target="_blank"
+               class="server-item flex items-center justify-between p-2 rounded-lg bg-[var(--card-bg)] hover:bg-[var(--btn-plain-bg-hover)] transition-colors text-sm group"
+               data-url={server.url}
+            >
+                <div class="flex items-center gap-2">
+                    {/* 状态点 */}
+                    <span class="w-2 h-2 rounded-full bg-gray-300 status-dot"></span>
+                    <span class="text-75 font-medium group-hover:text-[var(--primary)] transition-colors">{server.name}</span>
+                </div>
+                {/* 延迟数值 */}
+                <span class="latency-text text-xs text-50 font-mono">waiting...</span>
+            </a>
+        ))}
+    </div>
+</WidgetLayout>
+
+<script>
+    function checkLatency() {
+        const items = document.querySelectorAll('.server-item');
+        const currentOrigin = window.location.origin;
+
+        items.forEach(async (item) => {
+            const url = item.getAttribute('data-url');
+            if (!url) return;
+
+            // 🔧 修复核心：加了 'as HTMLElement' 来解决报错
+            const dot = item.querySelector('.status-dot') as HTMLElement;
+            const text = item.querySelector('.latency-text') as HTMLElement;
+            
+            // 安全检查：如果找不到元素就跳过，解决 '可能为 null' 的报错
+            if (!dot || !text) return;
+
+            // 💡高亮当前正在使用的线路
+            if (new URL(url).origin === currentOrigin) {
+                item.classList.remove('bg-[var(--card-bg)]');
+                item.classList.add('bg-[var(--primary)]', 'text-white');
+                text.style.color = 'white';
+                text.classList.add('!text-white');
+            }
+
+            // 开始测速
+            const start = Date.now();
+            try {
+                await fetch(url, { mode: 'no-cors', cache: 'no-store' });
+                const end = Date.now();
+                const latency = end - start;
+
+                text.textContent = latency + 'ms';
+                
+                // 颜色逻辑
+                if (new URL(url).origin !== currentOrigin) {
+                    if (latency < 100) {
+                        dot.style.backgroundColor = '#10b981'; // 🟢
+                        text.style.color = '#10b981';
+                    } else if (latency < 300) {
+                        dot.style.backgroundColor = '#f59e0b'; // 🟡
+                        text.style.color = '#f59e0b';
+                    } else {
+                        dot.style.backgroundColor = '#ef4444'; // 🔴
+                        text.style.color = '#ef4444';
+                    }
+                } else {
+                    // 当前线路下的点颜色
+                    if (latency < 100) dot.style.backgroundColor = '#fff';
+                    else if (latency < 300) dot.style.backgroundColor = '#fef08a';
+                    else dot.style.backgroundColor = '#fca5a5';
+                }
+
+            } catch (e) {
+                text.textContent = '超时';
+                dot.style.backgroundColor = '#9ca3af';
+            }
+        });
+    }
+
+    document.addEventListener('astro:page-load', checkLatency);
+    document.addEventListener('DOMContentLoaded', checkLatency);
+</script>

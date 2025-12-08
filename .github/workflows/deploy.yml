@@ -1,0 +1,48 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [ main ]  # 只有推送到 main 分支时才触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js (和 build.yml 保持一致用 v20 或更高)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. 安装 pnpm (跟原项目保持一致)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      # 4. 安装依赖并打包
+      - name: Install and Build
+        run: |
+          pnpm install
+          pnpm build
+        # 生成的文件会在 dist/ 目录下
+
+      # 5. 部署到服务器 (把 dist 目录的内容推送到宝塔)
+      - name: Deploy via SSH
+        uses: easingthemes/ssh-deploy@v5.0.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: "root"
+          # 只有这里需要修改：改成你宝塔里网站的根目录
+          TARGET: "/www/wwwroot/www.072145.xyz" 
+          EXCLUDE: "/dist/, /node_modules/"
