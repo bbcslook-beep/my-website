@@ -1,6 +1,5 @@
 ---
 title: "关于本站"
-layout: "../../layouts/MainLayout.astro"
 ---
 
 ## 站点概述
