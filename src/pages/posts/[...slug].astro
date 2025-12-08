@@ -9,9 +9,11 @@ import { getSortedPosts } from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
+import Comment from "../../components/Comment.astro"; //
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
+// ... 其他 import
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
 export async function getStaticPaths() {
@@ -107,10 +109,26 @@ const jsonLd = {
             </Markdown>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
+            
+<div class="onload-animation mt-8 bg-[var(--card-bg)] p-6 rounded-[var(--radius-large)] relative overflow-hidden border border-[var(--line-divider)]">
+                
+                <div class="mb-4 flex items-center gap-2">
+                    <div class="h-6 w-1 rounded-full bg-[var(--primary)]"></div>
+                    <h3 class="text-xl font-bold text-black/90 dark:text-white/90">评论区</h3>
+                </div>
 
+                <div class="relative z-10">
+                    <Comment />
+                </div>
+
+                <div class="absolute -right-4 -bottom-4 text-[8rem] font-bold text-black/[0.03] dark:text-white/[0.03] pointer-events-none select-none font-mono">
+                    CC
+                </div>
+            </div>
         </div>
     </div>
 
+    
     <div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
         <a href={entry.data.nextSlug ? getPostUrlBySlug(entry.data.nextSlug) : "#"}
            class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.nextSlug}]}>

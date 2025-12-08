@@ -1,0 +1,54 @@
+---
+// 🛠️ 在这里填入你在 giscus.app 获取到的配置
+const giscusConfig = {
+	repo: "bbcslook-beep/my-website", // 比如: afoim/my-blog
+	repoId: "R_kgDOQkdeEg", // 刚才复制的 data-repo-id
+	category: "Announcements", // 刚才选择的分类
+	categoryId: "DIC_kwDOQkdeEs4CzhXL", // 刚才复制的 data-category-id
+	mapping: "pathname", // 映射方式，默认 pathname 即可
+	strict: "0",
+	reactionsEnabled: "1",
+	emitMetadata: "0",
+	inputPosition: "top",
+	lang: "zh-CN",
+	loading: "lazy",
+};
+---
+
+<div class="giscus-container mt-8">
+    <script src="https://giscus.app/client.js"
+        data-repo={giscusConfig.repo}
+        data-repo-id={giscusConfig.repoId}
+        data-category={giscusConfig.category}
+        data-category-id={giscusConfig.categoryId}
+        data-mapping={giscusConfig.mapping}
+        data-strict={giscusConfig.strict}
+        data-reactions-enabled={giscusConfig.reactionsEnabled}
+        data-emit-metadata={giscusConfig.emitMetadata}
+        data-input-position={giscusConfig.inputPosition}
+        data-lang={giscusConfig.lang}
+        data-loading={giscusConfig.loading}
+        data-theme="preferred_color_scheme"
+        crossorigin="anonymous"
+        async
+    ></script>
+</div>
+
+<script is:inline>
+    // 自动切换日间/夜间模式的脚本
+    function updateGiscusTheme() {
+        const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: { setConfig: { theme } } }, 'https://giscus.app');
+    }
+
+    // 监听网页的主题变化
+    const observer = new MutationObserver(updateGiscusTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // 初始加载
+    document.addEventListener('astro:page-load', () => {
+        updateGiscusTheme();
+    });
+</script>
