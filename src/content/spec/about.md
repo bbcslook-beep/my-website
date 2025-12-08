@@ -1,9 +1,59 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+---
+title: "关于本站"
+layout: "../../layouts/MainLayout.astro"
+---
 
-::github{repo="saicaca/fuwari"}
+## 站点概述
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+**ChronoHex Tech Blog** 是一个基于 Jamstack 架构构建的静态技术博客。本站致力于分享深度学习 (Deep Learning)、网络安全 (Cybersecurity) 以及现代 Web 开发技术相关的实战笔记与技术文档。
+
+本站源代码遵循 MIT 开源协议托管于 GitHub，旨在为技术社区提供开放、透明的交流平台。
+
+<div class="flex justify-center my-4">
+  <GithubCard repo="saicaca/fuwari" />
+</div>
+
+---
+
+## 技术架构
+
+本站采用前沿的构建工具与自动化运维流程，以确保全球访问的高可用性与低延迟。
+
+### 核心驱动
+* **构建框架**: [Astro](https://astro.build/) (静态站点生成)
+* **样式引擎**: Tailwind CSS
+* **基础主题**: Fuwari (高度定制化)
+
+### 部署与分发
+我们采用 **CI/CD 自动化流水线** 实现“一次推送，全球同步”：
+1.  **主线路**: 接入 **Cloudflare CDN**，提供企业级抗攻击防护与全球加速边缘节点。
+2.  **灾备线路**: 部署于 **Vercel Edge Network**，确保服务永不中断。
+3.  **源站同步**: 通过 GitHub Actions 与 rsync 协议，实时同步至私有服务器 (CentOS) 作为数据源站。
+
+---
+
+## 隐私与服务声明
+
+我们高度重视您的隐私安全。作为静态网站，本站坚持“数据最小化”原则。
+
+### 1. 数据收集与存储
+* **无后端存储**: 本站主体为预生成的静态文件，服务器端不存储任何用户账户或个人身份信息 (PII)。
+* **本地存储 (Local Storage)**: 我们仅在您的浏览器本地存储必要的偏好设置（如深色/浅色模式切换状态），这些数据不会上传至服务器。
+
+### 2. 第三方服务
+为了提供完整的功能体验，本站集成了以下受信任的第三方服务：
+* **评论系统 (Giscus)**: 基于 GitHub Discussions API 构建。您的评论数据将直接托管于 GitHub 平台，本站不进行任何中间存储。
+* **流量分析 (Cloudflare Web Analytics)**: 采用注重隐私的无 Cookie 统计方案，仅统计页面浏览量与来源国家，不追踪具体用户画像。
+
+### 3. 版权与许可
+除特别声明外，本站原创文章均采用 **CC BY-NC-SA 4.0** (署名-非商业性使用-相同方式共享) 许可协议进行授权。转载请务必注明出处。
+
+---
+
+## 联系与反馈
+
+如果您发现本站内容存在错误，或有版权、技术相关的疑问，可以通过以下方式联系：
+
+* **Issue 反馈**: 请直接在 GitHub 仓库提交 Issue。
+
+*最后更新时间：2025-12-09*
