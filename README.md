@@ -30,7 +30,7 @@
 
 本项目不只是一个静态页面，更是一套完整的 **Jamstack** 解决方案：
 
-### 🛠️ 深度定制功能
+### 🛠️ 定制功能
 - **📶 多线路测速面板 (Network Dashboard)**
   - 侧边栏集成实时延迟检测组件，基于 `fetch` (no-cors) 实现。
   - 自动监测 **Cloudflare Edge**、**源站直连**、**Vercel 镜像** 及 **本地环境** 的连通性。
@@ -40,14 +40,10 @@
   - 实现了多域名（Cloudflare/Vercel/源站）数据合并统计与白名单过滤。
 - **🤖 自动化监控 (Uptime Monitoring)**
   - 顶部导航栏集成 **AcoFork UptimeRobot**，实时展示服务可用率。
-- **💬 沉浸式评论区**
+- **💬 纯前端评论区**
   - 基于 **Giscus** (GitHub Discussions) 构建。
   - 定制化 CSS 样式，完美融入 Fuwari 的设计语言。
 
-### 🎨 基础架构优化
-- **SEO 增强**：自动生成 `sitemap.xml` 与动态 `robots.txt`，针对 Google/Bing 优化收录。
-- **极致性能**：基于 Astro + Tailwind CSS 构建，Lighthouse 跑分 95+。
-- **开源合规**：底部集成开源声明与未来备案预留位。
 
 ---
 
@@ -74,7 +70,7 @@
 - [x] 迁移至 Cloudflare Pages
 - [x] 部署自建 Umami 统计
 - [x] 配置 Giscus 评论区
-- [ ] 撰写第一篇关于 AI 视频制作的技术文章
+- [ ] 撰写第一篇关于 AI SVC的技术文章
 - [ ] 优化移动端侧边栏交互
 
 ## 🤝 鸣谢 (Credits)
