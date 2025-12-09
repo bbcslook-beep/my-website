@@ -18,12 +18,15 @@ const servers = [
 		url: "https://my-website-murex-iota.vercel.app/",
 		id: "origin",
 	},
-	{
+];
+
+if (import.meta.env.DEV) {
+	servers.push({
 		name: "dev",
 		url: "http://localhost:4321",
 		id: "local",
-	},
-];
+	});
+}
 ---
 
 <WidgetLayout name="线路切换" id="network-status" isCollapsed={false}>
