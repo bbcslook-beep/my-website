@@ -53,6 +53,11 @@ export const navBarConfig: NavBarConfig = {
 			url: "https://sdgo.072145.xyz", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
+		{
+			name: "统计", // 导航栏显示的文字
+			url: "http://umami.072145.xyz/share/Ejc1r4BcnolCdhw8",
+			external: true, // true 代表在新标签页打开 (推荐，防止用户离开你的博客)
+		},
 	],
 };
 
