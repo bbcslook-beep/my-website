@@ -84,6 +84,7 @@
 * **Analytics**: [Umami](https://umami.is/)
 * **Comments**: [Giscus](https://giscus.app/)
 * **Hosting**: Cloudflare & Vercel
+* **一些小组件**:[二叉树树](https://github.com/afoim/fuwari)
 
 ---
 
