@@ -68,6 +68,23 @@
     * **Cloudflare Pages**: 自动触发构建 (`pnpm build`)，产物发布至全球边缘网络 (Edge Network)。
     * **Vercel**: 并行触发构建，更新灾备镜像。
 
+## 📝 待办事项 (To-Do)
+
+- [x] 完成多线路测速组件
+- [x] 迁移至 Cloudflare Pages
+- [x] 部署自建 Umami 统计
+- [x] 配置 Giscus 评论区
+- [ ] 撰写第一篇关于 AI 视频制作的技术文章
+- [ ] 优化移动端侧边栏交互
+
+## 🤝 鸣谢 (Credits)
+
+* **Framework**: [Astro](https://astro.build/)
+* **Theme**: [Fuwari](https://github.com/saicaca/fuwari)
+* **Analytics**: [Umami](https://umami.is/)
+* **Comments**: [Giscus](https://giscus.app/)
+* **Hosting**: Cloudflare & Vercel
+
 ---
 
 ## 🚀 本地开发 (Development)
@@ -83,28 +100,3 @@ pnpm install
 
 # 3. 启动开发服务器
 pnpm dev
-📝 待办事项 (To-Do)
-[x] 完成多线路测速组件
-
-[x] 迁移至 Cloudflare Pages
-
-[x] 部署自建 Umami 统计
-
-[x] 配置 Giscus 评论区
-
-[ ] 撰写第一篇关于 AI 视频制作的技术文章
-
-[ ] 优化移动端侧边栏交互
-
-🤝 鸣谢 (Credits)
-Framework: Astro
-
-Theme: Fuwari
-
-Analytics: Umami
-
-Comments: Giscus
-
-Hosting: Cloudflare & Vercel
-
-<p align="center"> Designed & Built by <strong>ChronoHex</strong> with ❤️ </p>
