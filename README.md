@@ -1,54 +1,110 @@
-# 🍥 ChronoHex Blog
+# 🍥 ChronoHex Tech Blog
 
-![Deployment Status](https://img.shields.io/github/actions/workflow/status/bbcslook-beep/my-website/deploy.yml?label=Deploy&logo=github-actions)
-![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel)
-![Astro](https://img.shields.io/badge/Astro-v4.0-orange?logo=astro)
-![License](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey)
+<div align="center">
+  <img src="public/favicon/favicon-light-596.png" width="120" height="120" alt="ChronoHex Logo" />
+</div>
 
-> 闲来无事整点活。
+<p align="center">
+  <a href="https://072145.xyz">
+    <img src="https://img.shields.io/badge/Live_Demo-072145.xyz-blue?style=for-the-badge&logo=cloudflare" alt="Live Demo">
+  </a>
+  <a href="https://github.com/bbcslook-beep/my-website">
+    <img src="https://img.shields.io/github/stars/bbcslook-beep/my-website?style=for-the-badge&logo=github" alt="GitHub Stars">
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Astro-5.0-orange?logo=astro" alt="Astro">
+  <img src="https://img.shields.io/badge/Cloudflare-Pages-F38020?logo=cloudflare" alt="Cloudflare Pages">
+  <img src="https://img.shields.io/badge/Umami-Analytics-indigo?logo=umami" alt="Umami">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
+
+> **"Code with logic, write with soul."**
 > 
-> 基于 [Fuwari](https://github.com/saicaca/fuwari) 主题微改的个人技术博客，集成了多线路状态监控与全自动化部署流程。
+> 基于 [Fuwari](https://github.com/saicaca/fuwari) 主题深度魔改的个人技术博客。集成了多线路全球分发、自建隐私统计与全自动化 DevOps 流程。
+
+---
 
 ## ⚡ 核心特性 (Features)
 
-本项目在原版 Fuwari 主题的基础上，进行了以下定制：
+本项目不只是一个静态页面，更是一套完整的 **Jamstack** 解决方案：
 
-### 🛠️ 功能
+### 🛠️ 深度定制功能
 - **📶 多线路测速面板 (Network Dashboard)**
-  - 侧边栏集成实时延迟检测组件。
-  - 自动监测 **Cloudflare 全球加速**、**源站直连**、**Vercel 镜像** 及 **本地环境** 的连通性。
-  - 智能高亮当前访问线路，支持红/黄/绿三色状态显示。
-  - 感谢来自[二叉树树](https://github.com/afoim/fuwari)的开源。
-- **💬 评论区**
-  - 基于 GitHub Discussions 的无后端评论系统。
-  - **定制化 UI**：重写了评论区容器，使其拥有与文章卡片一致的圆角与背景。
+  - 侧边栏集成实时延迟检测组件，基于 `fetch` (no-cors) 实现。
+  - 自动监测 **Cloudflare Edge**、**源站直连**、**Vercel 镜像** 及 **本地环境** 的连通性。
+  - 智能高亮当前访问线路，动态显示红/黄/绿健康状态。
+- **📊 自建隐私统计 (Self-hosted Analytics)**
+  - 集成 **Umami** (Docker 部署)，完全掌控用户数据，无 Cookie 隐私友好。
+  - 实现了多域名（Cloudflare/Vercel/源站）数据合并统计与白名单过滤。
+- **🤖 自动化监控 (Uptime Monitoring)**
+  - 顶部导航栏集成 **AcoFork UptimeRobot**，实时展示服务可用率。
+- **💬 沉浸式评论区**
+  - 基于 **Giscus** (GitHub Discussions) 构建。
+  - 定制化 CSS 样式，完美融入 Fuwari 的设计语言。
 
-### 🎨 原版优秀特性
-- 基于 **Astro** + **Tailwind CSS** 构建，极致的加载速度。
-- 丝滑的 View Transitions 页面过渡动画。
-- 完善的 Markdown 扩展语法（支持提示块 Admonitions、数学公式 LaTeX）。
-- 全响应式设计，完美适配移动端。
+### 🎨 基础架构优化
+- **SEO 增强**：自动生成 `sitemap.xml` 与动态 `robots.txt`，针对 Google/Bing 优化收录。
+- **极致性能**：基于 Astro + Tailwind CSS 构建，Lighthouse 跑分 95+。
+- **开源合规**：底部集成开源声明与未来备案预留位。
+
+---
 
 ## 🏗️ 部署架构 (Architecture)
 
-本项目采用 **多线部署 + 自动化 CI/CD** 架构，确保高可用性：
+采用 **"一次推送，全球同步"** 的 DevOps 策略，确保高可用与容灾：
 
-| 线路 | 承载平台 | 域名 | 说明 |
+| 角色 | 平台/工具 | 域名/地址 | 职责 |
 | :--- | :--- | :--- | :--- |
-| **主线路** | ☁️ **Cloudflare** | `072145.xyz` | 全球 CDN 加速，抗攻击 |
-| **备用线** | ▲ **Vercel** | `*.vercel.app` | 自动同步的灾备镜像站 |
+| **主线路** | ☁️ **Cloudflare Pages** | `072145.xyz` | 全球边缘节点分发，自动构建，无限带宽 |
+| **数据源站** | 🐧 **Linux (CentOS/Docker)** | `cloud.072145.xyz` | 托管 Umami 统计服务，Nginx 反向代理 |
+| **灾备镜像** | ▲ **Vercel** | `*.vercel.app` | 自动化同步的备用线路，防止单点故障 |
 
-### 自动化工作流
-1. **本地写作**：使用 VS Code 撰写 Markdown 文章。
-2. **推送到 GitHub**：`git push` 触发 GitHub Actions。
-3. **并行分发**：
-   - **Job 1**: 通过 Vercel 自动拉取构建，更新镜像站。
-   - **Job 2**: 通过 GitHub Actions 编译生成静态文件，利用 `rsync` 自动同步至宝塔服务器。
+### 🔄 CI/CD 工作流
+1.  **Develop**: 本地 VS Code 撰写 Markdown，`pnpm dev` 预览。
+2.  **Push**: 代码推送至 GitHub `main` 分支。
+3.  **Build & Deploy**:
+    * **Cloudflare Pages**: 自动触发构建 (`pnpm build`)，产物发布至全球边缘网络 (Edge Network)。
+    * **Vercel**: 并行触发构建，更新灾备镜像。
+
+---
 
 ## 🚀 本地开发 (Development)
 
-如果你想克隆本项目并在本地运行：
+如果你对本站的魔改方案感兴趣，可以克隆代码进行研究：
 
-1. **安装依赖**
-   ```bash
-   pnpm install
+```bash
+# 1. 克隆仓库
+git clone [https://github.com/bbcslook-beep/my-website.git](https://github.com/bbcslook-beep/my-website.git)
+
+# 2. 安装依赖
+pnpm install
+
+# 3. 启动开发服务器
+pnpm dev
+📝 待办事项 (To-Do)
+[x] 完成多线路测速组件
+
+[x] 迁移至 Cloudflare Pages
+
+[x] 部署自建 Umami 统计
+
+[x] 配置 Giscus 评论区
+
+[ ] 撰写第一篇关于 AI 视频制作的技术文章
+
+[ ] 优化移动端侧边栏交互
+
+🤝 鸣谢 (Credits)
+Framework: Astro
+
+Theme: Fuwari
+
+Analytics: Umami
+
+Comments: Giscus
+
+Hosting: Cloudflare & Vercel
+
+<p align="center"> Designed & Built by <strong>ChronoHex</strong> with ❤️ </p>

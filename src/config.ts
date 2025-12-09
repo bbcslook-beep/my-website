@@ -58,6 +58,11 @@ export const navBarConfig: NavBarConfig = {
 			url: "http://umami.072145.xyz/share/Ejc1r4BcnolCdhw8",
 			external: true, // true 代表在新标签页打开 (推荐，防止用户离开你的博客)
 		},
+		{
+			name: "状态", // 导航栏显示的文字
+			url: "https://stats.uptimerobot.com/eUvCSmHipt",
+			external: true, // true 代表在新标签页打开 (推荐，防止用户离开你的博客)
+		},
 	],
 };
 
