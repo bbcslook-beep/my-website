@@ -4,9 +4,15 @@ import tailwind from "@astrojs/tailwind";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
+<<<<<<< HEAD
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+=======
+import expressiveCode from "astro-expressive-code";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
+>>>>>>> upstream/main
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
@@ -16,17 +22,28 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import { expressiveCodeConfig } from "./src/config.ts";
+<<<<<<< HEAD
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+=======
+>>>>>>> upstream/main
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+<<<<<<< HEAD
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://072145.xyz",
+=======
+import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+
+// https://astro.build/config
+export default defineConfig({
+	site: "https://fuwari.vercel.app/",
+>>>>>>> upstream/main
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
@@ -61,12 +78,20 @@ export default defineConfig({
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
 				pluginLanguageBadge(),
+<<<<<<< HEAD
 				pluginCustomCopyButton(),
+=======
+				pluginCustomCopyButton()
+>>>>>>> upstream/main
 			],
 			defaultProps: {
 				wrap: true,
 				overridesByLang: {
+<<<<<<< HEAD
 					shellsession: {
+=======
+					'shellsession': {
+>>>>>>> upstream/main
 						showLineNumbers: false,
 					},
 				},
@@ -76,8 +101,12 @@ export default defineConfig({
 				borderRadius: "0.75rem",
 				borderColor: "none",
 				codeFontSize: "0.875rem",
+<<<<<<< HEAD
 				codeFontFamily:
 					"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+=======
+				codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+>>>>>>> upstream/main
 				codeLineHeight: "1.5rem",
 				frames: {
 					editorBackground: "var(--codeblock-bg)",
@@ -88,11 +117,16 @@ export default defineConfig({
 					editorActiveTabIndicatorBottomColor: "var(--primary)",
 					editorActiveTabIndicatorTopColor: "none",
 					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+<<<<<<< HEAD
 					terminalTitlebarBorderBottomColor: "none",
+=======
+					terminalTitlebarBorderBottomColor: "none"
+>>>>>>> upstream/main
 				},
 				textMarkers: {
 					delHue: 0,
 					insHue: 180,
+<<<<<<< HEAD
 					markHue: 250,
 				},
 			},
@@ -101,6 +135,16 @@ export default defineConfig({
 			},
 		}),
 		svelte(),
+=======
+					markHue: 250
+				}
+			},
+			frames: {
+				showCopyToClipboardButton: false,
+			}
+		}),
+        svelte(),
+>>>>>>> upstream/main
 		sitemap(),
 	],
 	markdown: {

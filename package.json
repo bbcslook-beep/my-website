@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "my-blog",
+=======
+  "name": "fuwari",
+>>>>>>> upstream/main
   "type": "module",
   "version": "0.0.1",
   "scripts": {
