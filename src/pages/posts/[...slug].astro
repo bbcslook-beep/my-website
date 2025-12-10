@@ -9,17 +9,11 @@ import { getSortedPosts } from "@utils/content-utils";
 import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
-<<<<<<< HEAD
 import Comment from "../../components/Comment.astro"; //
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 // ... 其他 import
-=======
-import ImageWrapper from "../../components/misc/ImageWrapper.astro";
-import PostMetadata from "../../components/PostMeta.astro";
-import { profileConfig, siteConfig } from "../../config";
->>>>>>> upstream/main
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
 export async function getStaticPaths() {
@@ -115,7 +109,6 @@ const jsonLd = {
             </Markdown>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
-<<<<<<< HEAD
             
 <div class="onload-animation mt-8 bg-[var(--card-bg)] p-6 rounded-[var(--radius-large)] relative overflow-hidden border border-[var(--line-divider)]">
                 
@@ -136,12 +129,6 @@ const jsonLd = {
     </div>
 
     
-=======
-
-        </div>
-    </div>
-
->>>>>>> upstream/main
     <div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
         <a href={entry.data.nextSlug ? getPostUrlBySlug(entry.data.nextSlug) : "#"}
            class:list={["w-full font-bold overflow-hidden active:scale-95", {"pointer-events-none": !entry.data.nextSlug}]}>

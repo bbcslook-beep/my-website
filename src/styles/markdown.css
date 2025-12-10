@@ -20,23 +20,11 @@
     }
 
     a:not(.no-styling) {
-<<<<<<< HEAD
-        /*修改重点：删掉了 'link'，加了 hover 和 transition */
-        @apply relative bg-none font-medium text-[var(--primary)] 
-        hover:text-[var(--primary-hover)] transition-colors
-        underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
-    
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
-    
-        /* display: inline-block; <-- 删掉这一行，否则长链接在手机上换行会很难看，保持默认 */
-=======
         @apply relative bg-none link font-medium text-[var(--primary)]
         underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
         display: inline-block;
->>>>>>> upstream/main
     
         &:hover, &:active {
             @apply decoration-transparent;
