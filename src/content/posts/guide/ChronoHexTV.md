@@ -1,6 +1,6 @@
 ---
 title: '57元打造百兆云端影院：从无限报错到丝般顺滑的避坑实录'
-published: 2025-12-11
+published: 2025-12-10
 description: '利用大陆廉价大带宽 VPS + 阿里云盘 + Jellyfin，采用存算分离架构搭建私人影院。本文深度复盘了解决 Rclone 挂载死锁、Docker 路径脱钩以及 403 Forbidden 防盗链的完整过程。'
 image: ''
 tags: [Self-Hosted, Jellyfin, Linux, Alist, Rclone]
