@@ -30,14 +30,13 @@ lang: 'zh'
 git fetch upstream
 git merge upstream/main
 结果 Git 给我泼了一盆冷水：
-```
 fatal: refusing to merge unrelated histories
-
+```
 **原因分析 ：** 我的仓库虽然代码和作者的一样，但当初是直接下载源码初始化的，而不是标准的 Fork。在 Git 眼里，这俩是完全没有血缘关系的两个项目，禁止“乱伦”。
 
 **⚔️ 解决方案：强制联姻**
 
-我使用了一个强力参数，告诉 Git “我知道她们不同，但请把她们合在一起”：
+我使用了一个强力参数，告诉 Git “我知道她们不同，但请把她们合在一起”：~~总感觉有点磕？~~
 
 ```bash
 
