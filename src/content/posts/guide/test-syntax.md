@@ -4,7 +4,7 @@ published: 2025-12-08
 description: 测试一下这个主题的高级 Markdown 功能
 image: "" 
 tags: [测试, Markdown]
-category: 技术
+category: '技术'
 draft: false
 ---
 
