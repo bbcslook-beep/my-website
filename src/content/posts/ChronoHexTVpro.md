@@ -212,7 +212,7 @@ final_url = f"{ALIST_HOST}{encoded_url_path}"
 
 利用闲置的台湾 VPS 作为“证书生成器”。
 
-使用 acme.sh 配合 Cloudflare API 申请泛域名证书 (*.xxxx.xyz)。
+使用 acme.sh 配合 Cloudflare API 申请泛域名证书 (*.xxxx.xxx)。
 
 将生成的证书文件回传至大陆 VPS。
 
