@@ -5,8 +5,8 @@
 </div>
 
 <p align="center">
-  <a href="https://072145.xyz">
-    <img src="https://img.shields.io/badge/Live_Demo-072145.xyz-blue?style=for-the-badge&logo=cloudflare" alt="Live Demo">
+  <a href="https://bbcslook.top">
+    <img src="https://img.shields.io/badge/Live_Demo-bbcslook.top-blue?style=for-the-badge&logo=cloudflare" alt="Live Demo">
   </a>
   <a href="https://github.com/bbcslook-beep/my-website">
     <img src="https://img.shields.io/github/stars/bbcslook-beep/my-website?style=for-the-badge&logo=github" alt="GitHub Stars">
@@ -53,8 +53,8 @@
 
 | 角色 | 平台/工具 | 域名/地址 | 职责 |
 | :--- | :--- | :--- | :--- |
-| **主线路** | ☁️ **Cloudflare Pages** | `072145.xyz` | 全球边缘节点分发，自动构建，无限带宽 |
-| **数据源站** | 🐧 **Linux (CentOS/Docker)** | `cloud.072145.xyz` | 托管 Umami 统计服务，Nginx 反向代理 |
+| **主线路** | ☁️ **Cloudflare Pages** | `bbcslook.top` | 全球边缘节点分发，自动构建，无限带宽 |
+| **数据源站** | 🐧 **Linux (CentOS/Docker)** | `cloud.bbcslook.top` | 托管 Umami 统计服务，Nginx 反向代理 |
 | **灾备镜像** | ▲ **Vercel** | `*.vercel.app` | 自动化同步的备用线路，防止单点故障 |
 
 ### 🔄 CI/CD 工作流
@@ -66,7 +66,7 @@
 
 ## 📝 待办事项 (To-Do)
 
-- [x] 完成多线路测速组件
+- [x] 转移源服务器
 - [x] 迁移至 Cloudflare Pages
 - [x] 部署自建 Umami 统计
 - [x] 配置 Giscus 评论区
