@@ -37,7 +37,7 @@ jobs:
       # 5. 部署到服务器 (使用 rsync)
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v5.0.0
-        env:
+        with:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO"
           SOURCE: "dist/"      # Astro 打包生成的目录
