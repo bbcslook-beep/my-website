@@ -34,15 +34,14 @@ jobs:
           pnpm build
         # 生成的文件会在 dist/ 目录下
 
-      # 5. 部署到服务器 (把 dist 目录的内容推送到宝塔)
+      # 5. 部署到服务器 (使用 rsync)
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v5.0.0
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO"
-          SOURCE: "dist/"
+          SOURCE: "dist/"      # Astro 打包生成的目录
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: "root"
-          # 只有这里需要修改：改成你宝塔里网站的根目录
-          TARGET: "/www/wwwroot/www.072145.xyz" 
-          EXCLUDE: "/dist/, /node_modules/"
+          REMOTE_USER: "root"  # 服务器用户名
+          
+          TARGET: "/www/wwwroot/blog.bbcslook.top"
