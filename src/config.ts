@@ -48,20 +48,20 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
-		{
-			name: "门户站点",
-			url: "https://sdgo.072145.xyz", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
-		},
+		//	{
+		//		name: "门户站点",
+		//		url: "", // Internal links should not include the base path, as it is automatically added
+		//		external: true, // Show an external link icon and will open in a new tab
+		//	},
 		{
 			name: "统计", // 导航栏显示的文字
-			url: "http://umami.072145.xyz/share/Ejc1r4BcnolCdhw8",
-			external: true, // true 代表在新标签页打开 (推荐，防止用户离开你的博客)
+			url: "http://umami.bbcslook.top/share/KfehYGJpUVGpLVwI",
+			external: true, //在新标签页打开
 		},
 		{
 			name: "状态", // 导航栏显示的文字
 			url: "https://stats.uptimerobot.com/eUvCSmHipt",
-			external: true, // true 代表在新标签页打开 (推荐，防止用户离开你的博客)
+			external: true, //在新标签页打开
 		},
 	],
 };
