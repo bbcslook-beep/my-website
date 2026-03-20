@@ -1,5 +1,5 @@
 ---
-title: '从搬运工到开发者：我的开源博客“排雷”实战复盘'
+title: '从搬运工到参与者：BBCSLOOK的开源博客实战复盘'
 published: 2025-12-11
 description: '记录一次惊心动魄的博客维护经历。从 Git 历史冲突到 CSS 类名丢失，再到构建流水线报错，我如何一步步解决“依赖地狱”，最终让 CI/CD 全绿通过。'
 image: '/images/git-merge-success.jpg'
