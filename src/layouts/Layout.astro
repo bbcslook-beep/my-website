@@ -156,6 +156,48 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+
+
+		<div id="my-custom-bg"></div>
+		<style>
+		  #my-custom-bg {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100vw;
+		    height: 100vh;
+		    z-index: -1; 
+		    pointer-events: none; 
+		    background-size: cover;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    opacity: 0; 
+		    transition: opacity 0.8s ease-in-out; 
+		  }
+		  #my-custom-bg.loaded {
+		    opacity: 0.6; 
+			filter: blur(3px); /* 模糊 */
+            transform: scale(1.02); /* 防漏边 */
+		  }
+		</style>
+
+		<script is:inline data-swup-ignore-script>
+          (function() {
+            const apiUrl = "https://papi.bbcslook.top/"; 
+            
+            const bgBox = document.getElementById('my-custom-bg');
+            if (!bgBox) return;
+
+            const img = new Image();
+            img.src = apiUrl + '?t=' + new Date().getTime(); 
+            
+            img.onload = () => {
+              bgBox.style.backgroundImage = `url('${img.src}')`;
+              bgBox.classList.add('loaded');
+            };
+          })();
+        </script>
+		
 	</body>
 </html>
 
