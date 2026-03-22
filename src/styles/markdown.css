@@ -19,10 +19,6 @@
         }
     }
 
-    /* 塞一个空的类在这里，纯粹为了骗过 Tailwind 的检查器 */
-    @layer components {
-    .link {}
-    }
 
     a:not(.no-styling) {
         @apply relative bg-none link font-medium text-[var(--primary)]
