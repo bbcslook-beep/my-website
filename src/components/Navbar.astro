@@ -51,7 +51,12 @@ let links: NavBarLink[] = navBarConfig.links.map(
                         <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
                     </button>
             )}
-            <LightDarkSwitch client:only="svelte"></LightDarkSwitch>
+               <!-- 解决了类型不匹配的错误 -->
+            <div class="flex items-center gap-2">
+                {/* @ts-ignore */}
+                <LightDarkSwitch client:only="svelte"></LightDarkSwitch>
+            </div>
+
             <button aria-label="Menu" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 md:!hidden" id="nav-menu-switch">
                 <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]"></Icon>
             </button>

@@ -2,7 +2,6 @@
 title: "如何在 Astro 博客中优雅地实现全屏随机背景图"
 description: "打破静态博客的限制，从零搭建专属私人随机图库 API，并利用 CSS 毛玻璃特效打造绝美全屏背景。"
 published: 2026-03-21
-image: "" 
 category: "折腾记录"
 tags: ["Astro", "前端", "PHP", "API", "CSS特效"]
 draft: false

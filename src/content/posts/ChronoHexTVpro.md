@@ -2,7 +2,6 @@
 title: 项目复盘：57元打造百兆带宽的云端NAS播放器
 published: 2025-12-12
 description: '无需昂贵NAS，利用廉价VPS+网盘+存算分离架构，打造高性能个人媒体库的全过程记录。涵盖从Rclone挂载到.strm影子库的架构演进。'
-image: ''
 tags: [Jellyfin, VPS, Alist, Docker, Nginx]
 category: '折腾记录'
 draft: false
