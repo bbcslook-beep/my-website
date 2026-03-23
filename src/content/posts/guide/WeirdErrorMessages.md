@@ -1,5 +1,5 @@
 ---
-title: "Debug 日志：从 TypeScript 类型陷阱到 CSS '幽灵' 报错的奇幻漂流"
+title: "Debug 日志：从 TypeScript 类型陷阱到 CSS 抽象报错"
 published: 2026-03-22
 description: "记录一次 Astro 项目从构建失败到全绿通过的完整填坑历程，涉及 TypeScript 类型修复与 Tailwind CSS 缓存玄学。"
 tags: [Astro, TypeScript, TailwindCSS, Debug]

@@ -159,27 +159,87 @@ const bannerOffset =
 
 
 		<div id="my-custom-bg"></div>
+
 		<style>
-		  #my-custom-bg {
-		    position: fixed;
-		    top: 0;
-		    left: 0;
-		    width: 100vw;
-		    height: 100vh;
-		    z-index: -1; 
-		    pointer-events: none; 
-		    background-size: cover;
-		    background-position: center;
-		    background-repeat: no-repeat;
-		    opacity: 0; 
-		    transition: opacity 0.8s ease-in-out; 
-		  }
-		  #my-custom-bg.loaded {
-		    opacity: 0.6; 
-			filter: blur(3px); /* 模糊 */
-            transform: scale(1.02); /* 防漏边 */
-		  }
+		/* --- 1. 背景原生样式（增加对模糊和缩放的过渡） --- */
+		#my-custom-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: -1;
+			pointer-events: none;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0;
+			/* 关键：把 filter 和 transform 也加入过渡，让清晰化的过程变平滑 */
+			transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
+		}
+		
+		#my-custom-bg.loaded {
+			opacity: 0.6;
+			filter: blur(3px); /* 默认模糊 */
+			transform: scale(1.02); /* 防漏边 */
+		}
+
+		/* --- 2. 沉浸模式样式控制 --- */
+		
+		/* 给页面上除背景外的所有外层元素加上透明度过渡 */
+		body > *:not(#my-custom-bg):not(script):not(style) {
+			transition: opacity 0.5s ease-in-out;
+		}
+
+		/* 当 body 加上 'bg-view-mode' 类时，隐藏主界面UI */
+		body.bg-view-mode > *:not(#my-custom-bg):not(script):not(style) {
+			opacity: 0 !important;
+			pointer-events: none !important; /* 让隐藏的UI不再阻挡鼠标 */
+		}
+
+		/* 当进入沉浸模式时，改变背景自身的状态 */
+		body.bg-view-mode #my-custom-bg.loaded {
+			opacity: 1; /* 亮度拉满 */
+			filter: blur(0px); /* 取消模糊 */
+			transform: scale(1); /* 恢复正常大小 */
+			z-index: 9999; /* 提至最前，盖住隐形的UI */
+			pointer-events: auto; /* 允许响应鼠标事件（这样点击它才能退出） */
+			cursor: zoom-out; /* 鼠标变成缩小放大镜，提示用户点击退出 */
+		}
 		</style>
+
+		<script is:inline data-swup-ignore-script>
+		(function() {
+			const apiUrl = "https://papi.bbcslook.top/";
+			const bgBox = document.getElementById('my-custom-bg');
+			if (!bgBox) return;
+
+			// 1. 加载图片逻辑 (保留你的原生逻辑)
+			const img = new Image();
+			img.src = apiUrl + '?t=' + new Date().getTime();
+			
+			img.onload = () => {
+			bgBox.style.backgroundImage = `url('${img.src}')`;
+			bgBox.classList.add('loaded');
+			};
+
+			// 2. 双击页面空白处进入“赏图模式”
+			document.addEventListener('dblclick', function(e) {
+			// 防误触：如果用户双击的是链接、按钮、图片或输入框，则不触发
+			if (e.target.closest('a, button, img, input, textarea')) return;
+			
+			// 给 body 加上一个状态 Class
+			document.body.classList.add('bg-view-mode');
+			});
+
+			// 3. 点击高清背景恢复原状
+			bgBox.addEventListener('click', function() {
+			if (document.body.classList.contains('bg-view-mode')) {
+				document.body.classList.remove('bg-view-mode');
+			}
+			});
+		})();
+		</script>
 
 		<script is:inline data-swup-ignore-script>
           (function() {
