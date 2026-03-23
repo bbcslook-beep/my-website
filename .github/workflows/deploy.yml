@@ -43,6 +43,6 @@ jobs:
           SOURCE: "dist/"      # Astro 打包生成的目录
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: "root"  # 服务器用户名
-          SSH_PORT: ${{ secrets.SERVER_PORT }}
+          REMOTE_PORT: ${{ secrets.SERVER_PORT }}
           
           TARGET: "/www/wwwroot/blog.bbcslook.top"
