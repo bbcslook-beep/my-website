@@ -3,7 +3,7 @@ title: Fuwari 核心语法测试
 published: 2025-12-08
 description: 测试一下这个主题的高级 Markdown 功能
 tags: [测试, Markdown]
-category: '技术'
+category: '技术笔记'
 draft: false
 ---
 
