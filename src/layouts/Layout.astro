@@ -160,7 +160,7 @@ const bannerOffset =
 
 		<div id="my-custom-bg"></div>
 
-		<style>
+		<style is:global>
 		/* --- 1. 背景原生样式（增加对模糊和缩放的过渡） --- */
 		#my-custom-bg {
 			position: fixed;
@@ -186,15 +186,32 @@ const bannerOffset =
 
 		/* --- 2. 沉浸模式样式控制 --- */
 		
-		/* 给页面上除背景外的所有外层元素加上透明度过渡 */
-		body > *:not(#my-custom-bg):not(script):not(style) {
-			transition: opacity 0.5s ease-in-out;
+		/*
+		 * MainGridLayout 通过 slot 注入，必须使用全局选择器才能命中其内部模块。
+		 * 只过渡 opacity，避免覆盖组件原有的 onload-animation 位移动画。
+		 */
+		body.bg-view-mode :is(
+			#navbar,
+			.card-base:not(#navbar .card-base),
+			.float-panel:not(#navbar .float-panel),
+			#back-to-top-btn,
+			#banner-credit
+		) {
+			opacity: 0 !important;
+			transition: opacity 0.5s ease-in-out !important;
+			pointer-events: none !important;
 		}
 
-		/* 当 body 加上 'bg-view-mode' 类时，隐藏主界面UI */
-		body.bg-view-mode > *:not(#my-custom-bg):not(script):not(style) {
-			opacity: 0 !important;
-			pointer-events: none !important; /* 让隐藏的UI不再阻挡鼠标 */
+		body.bg-view-restoring :is(
+			#navbar,
+			.card-base:not(#navbar .card-base),
+			.float-panel:not(#navbar .float-panel),
+			#back-to-top-btn,
+			#banner-credit
+		) {
+			opacity: 1 !important;
+			transition: opacity 0.5s ease-in-out !important;
+			pointer-events: none !important;
 		}
 
 		/* 当进入沉浸模式时，改变背景自身的状态 */
@@ -202,6 +219,10 @@ const bannerOffset =
 			opacity: 1; /* 亮度拉满 */
 			filter: blur(0px); /* 取消模糊 */
 			transform: scale(1); /* 恢复正常大小 */
+		}
+
+		/* 等 UI 完全淡出后，再把背景提到最前面接管点击 */
+		body.bg-view-front #my-custom-bg.loaded {
 			z-index: 9999; /* 提至最前，盖住隐形的UI */
 			pointer-events: auto; /* 允许响应鼠标事件（这样点击它才能退出） */
 			cursor: zoom-out; /* 鼠标变成缩小放大镜，提示用户点击退出 */
@@ -213,6 +234,9 @@ const bannerOffset =
 			const apiUrl = "https://papi.bbcslook.top/";
 			const bgBox = document.getElementById('my-custom-bg');
 			if (!bgBox) return;
+			const uiFadeDuration = 500;
+			let enterTimer;
+			let restoreTimer;
 
 			// 1. 加载图片逻辑 (保留你的原生逻辑)
 			const img = new Image();
@@ -227,16 +251,33 @@ const bannerOffset =
 			document.addEventListener('dblclick', function(e) {
 			// 防误触：如果用户双击的是链接、按钮、图片或输入框，则不触发
 			if (e.target.closest('a, button, img, input, textarea')) return;
+			if (document.body.classList.contains('bg-view-mode') ||
+				document.body.classList.contains('bg-view-restoring')) return;
 			
-			// 给 body 加上一个状态 Class
+			// 先播放 UI 淡出，完成后背景才置顶，保证淡出过程可见
+			clearTimeout(restoreTimer);
 			document.body.classList.add('bg-view-mode');
+			enterTimer = setTimeout(() => {
+				if (document.body.classList.contains('bg-view-mode')) {
+					document.body.classList.add('bg-view-front');
+				}
+			}, uiFadeDuration);
 			});
 
 			// 3. 点击高清背景恢复原状
 			bgBox.addEventListener('click', function() {
-			if (document.body.classList.contains('bg-view-mode')) {
-				document.body.classList.remove('bg-view-mode');
-			}
+				const body = document.body;
+				if (!body.classList.contains('bg-view-mode')) return;
+
+				// 先把背景放回底层，再显式播放 UI 淡入动画
+				clearTimeout(enterTimer);
+				body.classList.remove('bg-view-front');
+				body.classList.add('bg-view-restoring');
+				body.classList.remove('bg-view-mode');
+				clearTimeout(restoreTimer);
+				restoreTimer = setTimeout(() => {
+					body.classList.remove('bg-view-restoring');
+				}, uiFadeDuration + 50);
 			});
 		})();
 		</script>
