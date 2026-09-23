@@ -67,14 +67,14 @@ fusermount -uz /media/aliyunpan
 **原因：** Docker 容器在启动时锁定了宿主机的 inode。当我们重启 Rclone 挂载后，宿主机的目录 ID 变了，但容器还死死抓着旧的、空的目录句柄不放。甚至我们发现挂载路径本身都弄错了（aliyun vs aliyunpan）。
 
 **排查命令：**
-```Bash
+```bash
 
 docker inspect -f '{{ range .Mounts }}{{ .Source }} -> {{ .Destination }}{{ "\n" }}{{ end }}' jellyfin
 ```
 输出结果暴露了问题： /media/aliyun -> /media。 我们挂载的是 aliyunpan，容器却挂载了 aliyun，Jellyfin 当然什么都看不到。
 
 **解法：** 删除并重建容器，修正挂载路径，并开启特权模式以防止权限错误。
-```Bash
+```bash
 
 docker run -d \
  --name jellyfin \
@@ -111,7 +111,7 @@ Alist 设置： 将 WebDAV 策略改为 “本地代理 (Native Proxy)”。
 关键配置清单 (Rclone 最终版)
 如果你也是大带宽服务器，推荐使用这就套参数，牺牲一点点缓存空间，换取极致的稳定性：
 
-Bash
+bash
 
 # 既然走了本地代理，就不需要复杂的缓存参数了，越简单越稳定
 如果你也是大带宽服务器，推荐使用这就套参数，牺牲一点点缓存空间，换取极致的稳定性：
