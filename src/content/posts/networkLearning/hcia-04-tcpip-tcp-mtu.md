@@ -1,6 +1,6 @@
 ---
 title: 网络学习（四）：从协议分层到 TCP 握手，再到 MTU 与 MSS
-published: 2026-10-16
+published: 2026-10-14
 description: 把 OSI、TCP/IP、端口、封装、TCP 可靠传输、三次握手与连接关闭串成一条线，并区分 TCP 分段、IP 分片、MTU 和 MSS。
 tags: [HCIA, 网络, TCP, UDP, OSI, MTU, MSS]
 category: '网络学习'

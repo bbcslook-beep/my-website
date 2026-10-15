@@ -1,6 +1,6 @@
 ---
 title: 网络学习（五）：VRP 从命令视图到远程登录与配置保存
-published: 2026-10-16
+published: 2026-10-15
 description: 整理华为 VRP 的用户视图、系统视图、接口配置、AAA 和 VTY，补全隔离实验中的 Telnet 登录步骤，并区分当前配置与保存配置。
 tags: [HCIA, eNSP, 华为, VRP, Telnet, SSH, 运维]
 category: '网络学习'

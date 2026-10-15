@@ -1,6 +1,6 @@
 ---
 title: 网络学习（一）：从一根网线到交换机与 ARP
-published: 2026-10-16
+published: 2026-10-11
 description: 从双绞线、光纤和链路速率出发，理解交换机如何学习 MAC 地址、广播与泛洪有什么区别，以及一次同网段 Ping 如何通过 ARP 找到对方。
 tags: [HCIA, 网络, 以太网, 交换机, ARP]
 category: '网络学习'

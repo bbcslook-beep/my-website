@@ -1,6 +1,6 @@
 ---
 title: 网络学习（三）：把子网划分、VLSM 与 CIDR 汇总算明白
-published: 2026-10-16
+published: 2026-10-13
 description: 用 /24 分成两个 /25、四个 /26，以及 /16 划分至少六个子网的例题，整理网络地址、广播地址、可用主机数和路由汇总的计算方法。
 tags: [HCIA, 网络, IPv4, 子网划分, VLSM, CIDR]
 category: '网络学习'

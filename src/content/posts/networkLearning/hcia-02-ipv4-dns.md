@@ -1,6 +1,6 @@
 ---
 title: 网络学习（二）：IPv4、子网掩码与 DNS，主机如何找到目的地
-published: 2026-10-16
+published: 2026-10-12
 description: 整理 IPv4 二进制换算、网络位与主机位、常见特殊地址和 DNS 查询过程，弄清 IP、MAC、网关与域名分别解决什么问题。
 tags: [HCIA, 网络, IPv4, 子网掩码, DNS]
 category: '网络学习'
