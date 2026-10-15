@@ -1,0 +1,119 @@
+<!-- 独立的透明度层：不要和子组件的入场动画、菜单显隐争用 opacity。 -->
+<div id="wallpaper-ui">
+    <slot />
+</div>
+<div id="my-custom-bg" aria-hidden="true"></div>
+<button id="wallpaper-exit" type="button" aria-label="退出赏图模式" hidden></button>
+
+<style is:global>
+    #wallpaper-ui {
+        isolation: isolate;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    body.bg-view-mode #wallpaper-ui {
+        opacity: 0;
+    }
+
+    #my-custom-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        filter: blur(3px);
+        transform: scale(1.02);
+        transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
+
+    #my-custom-bg.loaded {
+        opacity: 0.6;
+    }
+
+    body.bg-view-mode #my-custom-bg.loaded {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+
+    /* 用透明按钮接管点击，背景始终留在底层，不切换 z-index。 */
+    #wallpaper-exit {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        outline: none;
+        cursor: zoom-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #wallpaper-ui,
+        #my-custom-bg {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const ui = document.getElementById('wallpaper-ui');
+    const background = document.getElementById('my-custom-bg');
+    const exitButton = document.getElementById('wallpaper-exit');
+
+    if (ui && background && exitButton) {
+        let previousFocus: HTMLElement | null = null;
+
+        const setViewing = (viewing: boolean) => {
+            if (viewing === document.body.classList.contains('bg-view-mode')) return;
+
+            if (viewing) {
+                previousFocus = document.activeElement instanceof HTMLElement
+                    ? document.activeElement : null;
+            }
+
+            document.body.classList.toggle('bg-view-mode', viewing);
+            ui.inert = viewing;
+            exitButton.hidden = !viewing;
+
+            if (viewing) {
+                exitButton.focus({ preventScroll: true });
+            } else if (previousFocus?.isConnected) {
+                previousFocus.focus({ preventScroll: true });
+            }
+        };
+
+        // 只请求一次图片；先注册回调，再设置 src，兼容缓存命中。
+        const image = new Image();
+        image.onload = () => {
+            background.style.backgroundImage = `url('${image.src}')`;
+            background.classList.add('loaded');
+        };
+        image.src = `https://papi.bbcslook.top/?t=${Date.now()}`;
+
+        document.addEventListener('dblclick', (event) => {
+            if (!(event.target instanceof Element)) return;
+            if (event.target.closest('a, button, img, input, textarea, select, [contenteditable], [role="button"]')) return;
+            if (!background.classList.contains('loaded')) return;
+            setViewing(true);
+        });
+
+        exitButton.addEventListener('click', () => setViewing(false));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') setViewing(false);
+        });
+
+        // 浏览器前进/后退也可能在赏图时触发站内导航。
+        const setupNavigation = () => {
+            window.swup.hooks.on('visit:start', () => setViewing(false));
+        };
+        if (window.swup) setupNavigation();
+        else document.addEventListener('swup:enable', setupNavigation, { once: true });
+    }
+</script>
