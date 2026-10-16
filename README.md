@@ -72,7 +72,7 @@
 - [x] 部署自建 Umami 统计
 - [x] 配置 Giscus 评论区
 - [x] 统一 Node.js 24 / pnpm 10 构建环境，升级 Astro 7
-- [ ] 单独迁移 Tailwind CSS 4 并验证样式
+- [x] 单独迁移 Tailwind CSS 4 并验证样式
 - [ ] 评估并按需引入上游 PR
 - [ ] 撰写第一篇关于 AI SVC的技术文章
 - [ ] 优化移动端侧边栏交互
@@ -129,4 +129,4 @@ pnpm test:build
 - Vercel 的 Node.js 版本应为 `24.x`，安装命令为 `pnpm install --frozen-lockfile`，构建命令为 `pnpm build`，输出目录为 `dist`。`package.json` 的 `engines.node` 声明了相同的主版本要求。
 - `pnpm-workspace.yaml` 明确列出允许执行安装脚本的原生构建依赖。添加新的原生依赖后，应先审查其安装脚本再更新名单。
 
-本轮保留 Tailwind CSS 3 的样式配置，通过标准 PostCSS 配置接入，已移除弃用的 `@astrojs/tailwind`。Tailwind 4 的视觉迁移和上游 PR 引入分别安排，避免与运行环境升级混合。
+当前使用 Tailwind CSS 4.3.3，通过 `@tailwindcss/vite` 接入。全局样式、字体、暗色模式与扫描范围集中在 `src/styles/tailwind.css`，可复用工具样式位于 `src/styles/utilities.css`。浏览器基线为 Safari 16.4、Chrome 111、Firefox 128；迁移细节和验证记录见 [Tailwind 4 迁移说明](docs/tailwind-4-migration.md)。上游 PR 引入另行评估。

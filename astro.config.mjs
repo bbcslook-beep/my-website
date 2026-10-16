@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import { unified } from "@astrojs/markdown-remark";
@@ -156,6 +157,7 @@ export default defineConfig({
 		}),
 	},
 	vite: {
+		plugins: [tailwindcss()],
 		build: {
 			rolldownOptions: {
 				onwarn(warning, warn) {

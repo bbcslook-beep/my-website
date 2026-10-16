@@ -1,6 +1,6 @@
 # ChronoHex 中文使用说明
 
-本仓库是基于 [Fuwari](https://github.com/saicaca/fuwari) 定制的个人博客，线上地址为 [bbcslook.top](https://bbcslook.top)。当前环境使用 Astro 7、Svelte 5 和 Tailwind CSS 3。
+本仓库是基于 [Fuwari](https://github.com/saicaca/fuwari) 定制的个人博客，线上地址为 [bbcslook.top](https://bbcslook.top)。当前环境使用 Astro 7、Svelte 5 和 Tailwind CSS 4。
 
 ## 安装与预览
 
@@ -65,4 +65,4 @@ lang: zh_CN
 
 ## 当前维护范围
 
-Tailwind CSS 仍使用 3.x，通过 PostCSS 接入。Tailwind 4 迁移和上游 PR 引入另行处理。环境升级记录与剩余依赖告警见 [2026-10 环境与依赖升级](environment-upgrade-2026-10.md)。
+Tailwind CSS 4 通过官方 Vite 插件接入，主题配置与样式导入位于 `src/styles/tailwind.css`。支持 Safari 16.4、Chrome 111、Firefox 128 及以上版本。环境历史见 [2026-10 环境与依赖升级](environment-upgrade-2026-10.md)，最新样式迁移与审计结果见 [Tailwind 4 迁移说明](tailwind-4-migration.md)。上游 PR 引入另行处理。

@@ -25,7 +25,7 @@ pnpm test:build
 
 `pnpm format` 会修改源文件，提交前需检查差异。纯文档变更检查内容、相对链接和命令是否与仓库一致；PR 的自动检查仍会执行。
 
-`pnpm build` 同时生成页面和 Pagefind 搜索索引，`pnpm test:build` 需要先有构建产物。依赖变更应同步提交 `pnpm-lock.yaml` 并检查 `pnpm audit`；现有审计告警和兼容覆盖记录在 [环境升级说明](docs/environment-upgrade-2026-10.md)。
+`pnpm build` 同时生成页面和 Pagefind 搜索索引，`pnpm test:build` 需要先有构建产物。依赖变更应同步提交 `pnpm-lock.yaml` 并检查 `pnpm audit`；兼容覆盖的原因记录在 [环境升级说明](docs/environment-upgrade-2026-10.md)，后续审计结果见 [Tailwind 4 迁移说明](docs/tailwind-4-migration.md)。
 
 ## 内容和兼容性
 
