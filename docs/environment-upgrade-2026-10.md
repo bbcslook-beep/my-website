@@ -2,6 +2,8 @@
 
 本次将构建环境统一到 Node.js 24 LTS、pnpm 10，并将 Astro 5 的旧内容集合迁移到 Astro 7，保留现有文章 URL 和 Tailwind 3 样式。
 
+本文记录 Astro 7 升级时的状态。随后进行的 Tailwind 4 迁移和最新审计结果见 [Tailwind 4 迁移说明](tailwind-4-migration.md)。
+
 ## 版本与兼容处理
 
 | 组件 | 升级前 | 本次 |

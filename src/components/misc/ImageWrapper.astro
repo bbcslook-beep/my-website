@@ -29,9 +29,12 @@ const isPublic = src.startsWith("/");
 // biome-ignore lint/suspicious/noImplicitAnyLet: <check later>
 let img;
 if (isLocal) {
-	const files = import.meta.glob<ImageMetadata>("../../**", {
-		import: "default",
-	});
+	const files = import.meta.glob<ImageMetadata>(
+		"../../**/*.{jpeg,jpg,png,gif,webp,avif,tiff,svg}",
+		{
+			import: "default",
+		},
+	);
 	let normalizedPath = path
 		.normalize(path.join("../../", basePath, src))
 		.replace(/\\/g, "/");
@@ -48,7 +51,7 @@ const imageClass = "w-full h-full object-cover";
 const imageStyle = `object-position: ${position}`;
 ---
 <div id={id} class:list={[className, 'overflow-hidden relative']}>
-    <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
+    <div class="transition absolute inset-0 dark:bg-black/10 pointer-events-none"></div>
     {isLocal && img && <Image src={img} alt={alt || ""} class={imageClass} style={imageStyle}/>}
     {!isLocal && <img src={isPublic ? url(src) : src} alt={alt || ""} class={imageClass} style={imageStyle}/>}
 </div>
