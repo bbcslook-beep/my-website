@@ -44,7 +44,11 @@ export default defineConfig({
 			cache: true,
 			preload: true,
 			accessibility: true,
-			updateHead: true,
+			updateHead: {
+				// Vite owns these dev-only styles. Persistent client-only islands
+				// cannot re-inject them after Swup removes them during navigation.
+				persistTags: "style[data-vite-dev-id]",
+			},
 			updateBodyClass: false,
 			globalInstance: true,
 		}),
