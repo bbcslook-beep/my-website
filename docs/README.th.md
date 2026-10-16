@@ -1,3 +1,5 @@
+> **Upstream reference:** This document describes the original Fuwari template and may contain outdated setup instructions. For this customized repository, follow the [project README](../README.md) and [contribution guide](../CONTRIBUTING.md).
+
 # 🍥Fuwari
 
 แม่แบบสำหรับเว็บบล็อกแบบ static สร้างด้วย [Astro](https://astro.build)

@@ -1,0 +1,4 @@
+# Keep formatting checks consistent between Windows and Linux builds.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf

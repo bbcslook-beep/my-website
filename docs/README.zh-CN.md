@@ -1,86 +1,68 @@
-# 🍥Fuwari
+# ChronoHex 中文使用说明
 
-基于 [Astro](https://astro.build) 开发的静态博客模板。
+本仓库是基于 [Fuwari](https://github.com/saicaca/fuwari) 定制的个人博客，线上地址为 [bbcslook.top](https://bbcslook.top)。当前环境使用 Astro 7、Svelte 5 和 Tailwind CSS 3。
 
-[**🖥️在线预览（Vercel）**](https://fuwari.vercel.app)
+## 安装与预览
 
-![Preview Image](https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png)
+使用 `.nvmrc` 指定的 Node.js 24.22.0 和 `package.json` 指定的 pnpm 10.34.7，在仓库根目录执行：
 
-## ✨ 功能特性
-
-- [x] 基于 Astro 和 Tailwind CSS 开发
-- [x] 流畅的动画和页面过渡
-- [x] 亮色 / 暗色模式
-- [x] 自定义主题色和横幅图片
-- [x] 响应式设计
-- [x] 评论
-- [x] 搜索
-- [x] 文内目录
-
-## 👀 要求
-
-- Node.js <= 22
-- pnpm <= 9
-
-## 🚀 使用方法 1
-
-使用 [create-fuwari](https://github.com/L4Ph/create-fuwari) 在本地初始化项目。
-
-```sh
-# npm
-npm create fuwari@latest
-
-# yarn
-yarn create fuwari
-
-# pnpm
-pnpm create fuwari@latest
-
-# bun
-bun create fuwari@latest
-
-# deno
-deno run -A npm:create-fuwari@latest
+```bash
+npm install --global pnpm@10.34.7
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-1. 通过配置文件 `src/config.ts` 自定义博客
-2. 执行 `pnpm new-post <filename>` 创建新文章，并在 `src/content/posts/` 目录中编辑
-3. 参考[官方指南](https://docs.astro.build/zh-cn/guides/deploy/)将博客部署至 Vercel, Netlify, GitHub Pages 等；部署前需编辑 `astro.config.mjs` 中的站点设置。
+开发地址以终端输出为准，通常为 `http://localhost:4321`。生产搜索依赖 Pagefind 索引，检查搜索时先执行 `pnpm build`，再用 `pnpm preview` 预览产物。
 
-## 🚀 使用方法 2
+完整克隆步骤、部署环境和维护流程见 [项目 README](../README.md) 与 [贡献指南](../CONTRIBUTING.md)。
 
-1. 使用此模板[生成新仓库](https://github.com/saicaca/fuwari/generate)或 Fork 此仓库
-2. 进行本地开发，Clone 新的仓库，执行 `pnpm install` 和 `pnpm add sharp` 以安装依赖  
-   - 若未安装 [pnpm](https://pnpm.io)，执行 `npm install -g pnpm`
-3. 通过配置文件 `src/config.ts` 自定义博客
-4. 执行 `pnpm new-post <filename>` 创建新文章，并在 `src/content/posts/` 目录中编辑
-5. 参考[官方指南](https://docs.astro.build/zh-cn/guides/deploy/)将博客部署至 Vercel, Netlify, GitHub Pages 等；部署前需编辑 `astro.config.mjs` 中的站点设置。
+## 站点与文章
 
-## ⚙️ 文章 Frontmatter
+- `src/config.ts`：站点标题、导航、头像、主题色等设置。
+- `astro.config.mjs`：站点 URL、构建集成和 Markdown 处理。
+- `src/content.config.ts`：文章与特殊页面的内容集合及字段定义。
+- `src/content/posts/`：博客文章和随文资源。
+- `src/content/spec/`：关于页等特殊内容。
+
+创建文章：
+
+```bash
+pnpm new-post my-first-post
+```
+
+脚本会生成 `src/content/posts/my-first-post.md`。文章开头的 Frontmatter 示例：
 
 ```yaml
 ---
-title: My First Blog Post
-published: 2023-09-09
-description: This is the first post of my new Astro blog.
+title: 我的第一篇文章
+published: 2026-10-16
+description: 文章摘要
 image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
+tags: [随笔]
+category: 日常
 draft: false
-lang: jp      # 仅当文章语言与 `config.ts` 中的网站语言不同时需要设置
+lang: zh_CN
 ---
 ```
 
-## 🧞 指令
+封面可使用相对文章目录的路径。`draft: true` 用于草稿，发布前改为 `false`。`lang` 仅在文章语言需要单独指定时填写。
 
-下列指令均需要在项目根目录执行：
+已有文章路径会影响公开 URL；移动或重命名文章前，应处理旧地址的重定向，并检查 `tests/fixtures/published-routes.json`。新增文章不应移除清单中的已有地址。
 
-| Command                           | Action                            |
-|:----------------------------------|:----------------------------------|
-| `pnpm install` 并 `pnpm add sharp` | 安装依赖                              |
-| `pnpm dev`                        | 在 `localhost:4321` 启动本地开发服务器      |
-| `pnpm build`                      | 构建网站至 `./dist/`                   |
-| `pnpm preview`                    | 本地预览已构建的网站                        |
-| `pnpm new-post <filename>`        | 创建新文章                             |
-| `pnpm astro ...`                  | 执行 `astro add`, `astro check` 等指令 |
-| `pnpm astro --help`               | 显示 Astro CLI 帮助                   |
+## 常用命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `pnpm install --frozen-lockfile` | 按锁文件安装依赖 |
+| `pnpm dev` | 启动本地开发服务器 |
+| `pnpm check` | 检查 Astro 与类型错误 |
+| `pnpm format` | 格式化源文件，会写入修改 |
+| `pnpm lint:ci` | 检查代码质量，不写入修改 |
+| `pnpm build` | 构建网站和搜索索引至 `dist/` |
+| `pnpm test:build` | 验证已构建页面、RSS、搜索索引、资源及公式 |
+| `pnpm preview` | 预览已构建的网站 |
+| `pnpm new-post <filename>` | 创建文章 |
+
+## 当前维护范围
+
+Tailwind CSS 仍使用 3.x，通过 PostCSS 接入。Tailwind 4 迁移和上游 PR 引入另行处理。环境升级记录与剩余依赖告警见 [2026-10 环境与依赖升级](environment-upgrade-2026-10.md)。

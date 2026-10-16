@@ -1,37 +1,21 @@
-## Type of change
+## 改动说明
 
-- [ ] Bug fix (a non-breaking change that fixes an issue)
-- [ ] New feature (a non-breaking change that adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Other (please describe):
+<!-- 说明解决的问题、改动后的行为以及影响范围。 -->
 
-## Checklist
+## 验证
 
-- [ ] I have read the [**CONTRIBUTING**](https://github.com/saicaca/fuwari/blob/main/CONTRIBUTING.md) document.
-- [ ] I have checked to ensure that this Pull Request is not for personal changes.
-- [ ] I have performed a self-review of my own code.
-- [ ] My changes generate no new warnings.
+<!-- 列出实际执行的检查和结果；未执行或不适用的项目说明原因。界面变更附预览链接和截图。 -->
 
-## Related Issue
+- [ ] 已阅读 [维护与贡献指南](https://github.com/bbcslook-beep/my-website/blob/main/CONTRIBUTING.md)，并检查提交差异
+- [ ] 类型和代码质量检查通过（源码变更）
+- [ ] 网站构建与产物回归检查通过（源码、配置或依赖变更）
+- [ ] 已检查部署预览；界面变更覆盖移动端和明暗主题
+- [ ] 文档、版本声明及锁文件已按需同步
 
-<!-- Please link to the issue that this pull request addresses. e.g. #123 -->
+## 已知限制与发布说明
 
+<!-- 依赖告警、部署平台设置、URL 变更及回滚要求等。合并到 main 会自动触发正式部署。 -->
 
-## Changes
+## 关联事项
 
-<!-- Please describe the changes you made in this pull request. -->
-
-
-## How To Test
-
-<!-- Please describe how you tested your changes. -->
-
-
-## Screenshots (if applicable)
-
-<!-- If you made any UI changes, please include screenshots. -->
-
-
-## Additional Notes
-
-<!-- Any additional information that you want to share with the reviewer. -->
+<!-- 如有相关 issue 或上游 PR，在这里链接。 -->

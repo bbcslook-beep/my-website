@@ -1,3 +1,5 @@
+> **Upstream reference:** This document describes the original Fuwari template and may contain outdated setup instructions. For this customized repository, follow the [project README](../README.md) and [contribution guide](../CONTRIBUTING.md).
+
 # 🍥Fuwari  
 
 Một mẫu blog tĩnh được xây bằng [Astro](https://astro.build).

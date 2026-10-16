@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Astro-5.0-orange?logo=astro" alt="Astro">
+  <img src="https://img.shields.io/badge/Astro-7-orange?logo=astro" alt="Astro">
   <img src="https://img.shields.io/badge/Cloudflare-Pages-F38020?logo=cloudflare" alt="Cloudflare Pages">
   <img src="https://img.shields.io/badge/Umami-Analytics-indigo?logo=umami" alt="Umami">
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
@@ -58,11 +58,12 @@
 | **灾备镜像** | ▲ **Vercel** | `*.vercel.app` | 自动化同步的备用线路，防止单点故障 |
 
 ### 🔄 CI/CD 工作流
-1.  **Develop**: 本地 VS Code 撰写 Markdown，`pnpm dev` 预览。
-2.  **Push**: 代码推送至 GitHub `main` 分支。
-3.  **Build & Deploy**:
-    * **Cloudflare Pages**: 自动触发构建 (`pnpm build`)，产物发布至全球边缘网络 (Edge Network)。
-    * **Vercel**: 并行触发构建，更新灾备镜像。
+1. **开发**：从最新 `main` 创建工作分支，在本地编辑并用 `pnpm dev` 预览。
+2. **提交 PR**：推送工作分支，向 `main` 提交 PR。GitHub Actions 执行代码质量检查、类型检查、构建和产物回归检查；Cloudflare Pages 与 Vercel 提供预览部署。
+3. **验证并合并**：检查通过后，确认预览中的文章、搜索、移动端和明暗主题，再合并到 `main`。
+4. **正式部署**：Cloudflare Pages、Vercel 自动更新；`Deploy to Server` 工作流在重新检查和构建后，通过 SSH 同步静态产物到服务器。
+
+维护流程见 [贡献指南](CONTRIBUTING.md)，文章写作见 [中文使用说明](docs/README.zh-CN.md)，环境变更与已知限制见 [2026-10 升级记录](docs/environment-upgrade-2026-10.md)。
 
 ## 📝 待办事项 (To-Do)
 
@@ -70,6 +71,9 @@
 - [x] 迁移至 Cloudflare Pages
 - [x] 部署自建 Umami 统计
 - [x] 配置 Giscus 评论区
+- [x] 统一 Node.js 24 / pnpm 10 构建环境，升级 Astro 7
+- [ ] 单独迁移 Tailwind CSS 4 并验证样式
+- [ ] 评估并按需引入上游 PR
 - [ ] 撰写第一篇关于 AI SVC的技术文章
 - [ ] 优化移动端侧边栏交互
 
@@ -86,14 +90,43 @@
 
 ## 🚀 本地开发 (Development)
 
+运行环境统一使用 Node.js 24 LTS（精确版本见 `.nvmrc`）和 pnpm 10.34.7（见 `package.json`）。
+本地、GitHub Actions 和部署平台应使用同一套版本。
+
 如果你对本站的魔改方案感兴趣，可以克隆代码进行研究：
 
 ```bash
 # 1. 克隆仓库
-git clone [https://github.com/bbcslook-beep/my-website.git](https://github.com/bbcslook-beep/my-website.git)
+git clone https://github.com/bbcslook-beep/my-website.git
+cd my-website
+
+# 使用 .nvmrc 指定的 Node.js 后，安装项目指定的 pnpm
+npm install --global pnpm@10.34.7
 
 # 2. 安装依赖
-pnpm install
+pnpm install --frozen-lockfile
 
 # 3. 启动开发服务器
 pnpm dev
+```
+
+提交前运行：
+
+```bash
+pnpm check
+pnpm format
+pnpm lint:ci
+pnpm build
+pnpm test:build
+```
+
+`pnpm build` 同时生成静态页面和 Pagefind 搜索索引。构建回归检查会验证已有文章地址、RSS、搜索索引和静态资源；现有文章地址保存在 `tests/fixtures/published-routes.json`，只有主动删除或重定向文章时才应调整该清单。
+
+### 部署环境
+
+- GitHub Actions 从 `.nvmrc` 读取 Node.js，从 `package.json` 读取 pnpm，使用锁文件安装；服务器部署前也执行检查和构建回归验证。
+- Cloudflare Pages 使用支持 Node.js 24 的构建镜像，构建命令为 `pnpm build`，输出目录为 `dist`。如后台配置了 `NODE_VERSION`，需与 `.nvmrc` 一致；`PNPM_VERSION` 应设为 `10.34.7`。
+- Vercel 的 Node.js 版本应为 `24.x`，安装命令为 `pnpm install --frozen-lockfile`，构建命令为 `pnpm build`，输出目录为 `dist`。`package.json` 的 `engines.node` 声明了相同的主版本要求。
+- `pnpm-workspace.yaml` 明确列出允许执行安装脚本的原生构建依赖。添加新的原生依赖后，应先审查其安装脚本再更新名单。
+
+本轮保留 Tailwind CSS 3 的样式配置，通过标准 PostCSS 配置接入，已移除弃用的 `@astrojs/tailwind`。Tailwind 4 的视觉迁移和上游 PR 引入分别安排，避免与运行环境升级混合。
