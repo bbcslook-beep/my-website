@@ -1,3 +1,5 @@
+> **Upstream reference:** This document describes the original Fuwari template and may contain outdated setup instructions. For this customized repository, follow the [project README](../README.md) and [contribution guide](../CONTRIBUTING.md).
+
 # 🍥Fuwari
 
 [Astro](https://astro.build)로 구축된 정적 블로그 템플릿입니다.

@@ -51,6 +51,8 @@ pnpm test:build
 
 构建保留 32 个页面，搜索索引包含 27 个页面（含关于页）。回归检查覆盖升级前已发布路径、RSS 文章地址、搜索索引覆盖率、构建资源文件及数学公式。浏览器验证使用本地产物并阻止外部请求；Giscus、统计服务和外部图片服务的可用性需以部署预览为准。
 
-Cloudflare/Vercel 的后台覆盖设置不能从仓库完全确认。合并前检查部署预览，以及 README 中的 Node/pnpm 设置。发布采用 PR 合并流程；回滚时撤销升级提交并恢复对应的托管平台版本覆盖。
+升级代码提交 `99efaeb` 已通过 GitHub Actions 的构建与代码质量检查，以及 Cloudflare Pages、Vercel 预览部署；[PR #13](https://github.com/bbcslook-beep/my-website/pull/13) 保留检查和预览记录。
+
+Cloudflare/Vercel 的后台覆盖设置不能从仓库完全确认，环境要求见 README。发布采用 PR 合并流程；合并到 `main` 后，需检查该提交对应的 GitHub Actions、托管平台部署及线上页面。回滚时通过新的 PR 撤销升级变更，并按需恢复对应的托管平台版本覆盖。
 
 Tailwind 4 迁移、TypeScript/Biome 的进一步大版本调整以及上游 PR 引入不包含在本次改动中。

@@ -58,11 +58,12 @@
 | **灾备镜像** | ▲ **Vercel** | `*.vercel.app` | 自动化同步的备用线路，防止单点故障 |
 
 ### 🔄 CI/CD 工作流
-1.  **Develop**: 本地 VS Code 撰写 Markdown，`pnpm dev` 预览。
-2.  **Push**: 代码推送至 GitHub `main` 分支。
-3.  **Build & Deploy**:
-    * **Cloudflare Pages**: 自动触发构建 (`pnpm build`)，产物发布至全球边缘网络 (Edge Network)。
-    * **Vercel**: 并行触发构建，更新灾备镜像。
+1. **开发**：从最新 `main` 创建工作分支，在本地编辑并用 `pnpm dev` 预览。
+2. **提交 PR**：推送工作分支，向 `main` 提交 PR。GitHub Actions 执行代码质量检查、类型检查、构建和产物回归检查；Cloudflare Pages 与 Vercel 提供预览部署。
+3. **验证并合并**：检查通过后，确认预览中的文章、搜索、移动端和明暗主题，再合并到 `main`。
+4. **正式部署**：Cloudflare Pages、Vercel 自动更新；`Deploy to Server` 工作流在重新检查和构建后，通过 SSH 同步静态产物到服务器。
+
+维护流程见 [贡献指南](CONTRIBUTING.md)，文章写作见 [中文使用说明](docs/README.zh-CN.md)，环境变更与已知限制见 [2026-10 升级记录](docs/environment-upgrade-2026-10.md)。
 
 ## 📝 待办事项 (To-Do)
 
@@ -70,6 +71,9 @@
 - [x] 迁移至 Cloudflare Pages
 - [x] 部署自建 Umami 统计
 - [x] 配置 Giscus 评论区
+- [x] 统一 Node.js 24 / pnpm 10 构建环境，升级 Astro 7
+- [ ] 单独迁移 Tailwind CSS 4 并验证样式
+- [ ] 评估并按需引入上游 PR
 - [ ] 撰写第一篇关于 AI SVC的技术文章
 - [ ] 优化移动端侧边栏交互
 
