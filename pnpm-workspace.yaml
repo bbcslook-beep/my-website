@@ -1,0 +1,15 @@
+# Native dependencies used by Astro's build and image pipeline.
+onlyBuiltDependencies:
+  - '@astrojs/compiler-rs'
+  - '@parcel/watcher'
+  - '@swc/core'
+  - esbuild
+  - sharp
+
+overrides:
+  # Swup ships compiled plugins; microbundle is only used by its publishing CLI.
+  # This site never invokes that CLI, so avoid its obsolete Rollup/Terser tree.
+  '@swup/plugin@3.0.1>microbundle': '-'
+  # Backport advisory fixes until upstream packages widen their dependency ranges.
+  'postcss-selector-parser@<7.1.6': '^7.1.6'
+  'katex@<0.18.2': '^0.19.0'

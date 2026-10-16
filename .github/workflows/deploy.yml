@@ -2,47 +2,43 @@ name: Deploy to Server
 
 on:
   push:
-    branches: [ main ]  # 只有推送到 main 分支时才触发
+    branches: [main]
+
+concurrency:
+  group: deploy-server
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
-      # 1. 拉取代码
       - name: Checkout
-        uses: actions/checkout@v4
-
-      # 2. 安装 Node.js (和 build.yml 保持一致用 v20 或更高)
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # 3. 安装 pnpm (跟原项目保持一致)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@d9184bf108216479bc5a137cc391f4d7b14c870b # v6.1.0
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          version: 8
-
-      # 4. 安装依赖并打包
-      - name: Install and Build
+          node-version-file: .nvmrc
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check and build
         run: |
-          pnpm install
+          pnpm check
+          pnpm lint:ci
           pnpm build
-        # 生成的文件会在 dist/ 目录下
-
-      # 5. 部署到服务器 (使用 rsync)
+          pnpm test:build
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO"
-          SOURCE: "dist/"      # Astro 打包生成的目录
+          SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: "root"  # 服务器用户名
+          REMOTE_USER: "root"
           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
-          
           TARGET: "/www/wwwroot/blog.bbcslook.top"
