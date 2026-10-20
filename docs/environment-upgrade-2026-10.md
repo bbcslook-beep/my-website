@@ -58,3 +58,11 @@ pnpm test:build
 Cloudflare/Vercel 的后台覆盖设置不能从仓库完全确认，环境要求见 README。发布采用 PR 合并流程；合并到 `main` 后，需检查该提交对应的 GitHub Actions、托管平台部署及线上页面。回滚时通过新的 PR 撤销升级变更，并按需恢复对应的托管平台版本覆盖。
 
 Tailwind 4 迁移、TypeScript/Biome 的进一步大版本调整以及上游 PR 引入不包含在本次改动中。
+
+## 2026-10-20：本地环境对齐与 Biome 更新
+
+- Windows 本地 Node.js 从 24.11.1 更新为 24.22.0，随附 npm 更新为 11.19.1；本地 pnpm 入口从 10.24.0 更新为 10.34.7，与项目声明保持一致。
+- Biome 从 2.2.5 更新为 2.5.15，并通过官方迁移命令更新配置。推荐规则配置改用 `preset: "recommended"`，GitHub 卡片的仓库属性检查改为可选链写法。
+- 锁文件仅更新 Biome 及其各平台执行文件。代码质量检查、Astro 检查、32 页构建和 5 项产物回归测试通过；依赖审计报告 0 条已知漏洞。
+
+pnpm 默认按磁盘存放依赖缓存。Windows 用户目录中的 `AppData/Local/pnpm/store`，以及其他盘根目录下的 `.pnpm-store`，用于同盘项目共享依赖，不代表重复安装了 pnpm。将所有缓存集中到另一块磁盘会使跨盘安装改用复制，通常无需为统一目录而调整。详见 [pnpm 存储说明](https://pnpm.io/10.x/settings#storedir)。
