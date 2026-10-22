@@ -174,11 +174,12 @@ pnpm dev
 pnpm check
 pnpm format
 pnpm lint:ci
+pnpm test:security
 pnpm build
 pnpm test:build
 ```
 
-`pnpm build` 同时生成静态页面和 Pagefind 搜索索引。构建回归检查会验证已有文章地址、RSS、搜索索引和静态资源；现有文章地址保存在 `tests/fixtures/published-routes.json`，只有主动删除或重定向文章时才应调整该清单。
+`pnpm test:security` 验证结构化数据和 GitHub 卡片的脚本输出安全。`pnpm build` 同时生成静态页面和 Pagefind 搜索索引。构建回归检查会验证已有文章地址、RSS、搜索索引和静态资源；现有文章地址保存在 `tests/fixtures/published-routes.json`，只有主动删除或重定向文章时才应调整该清单。
 
 ### 部署环境
 

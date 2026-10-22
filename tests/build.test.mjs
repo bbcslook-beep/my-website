@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
@@ -44,6 +44,29 @@ test("all URLs published before the Astro migration remain available", () => {
 			assert.match(html, /data-pagefind-body/, route);
 			assert.match(html, /class="[^"]*custom-md/, route);
 		}
+	}
+});
+
+test("published article pages retain valid BlogPosting structured data", () => {
+	const articleRoutes = publishedRoutes.filter((route) =>
+		route.startsWith("/posts/"),
+	);
+	assert.ok(articleRoutes.length > 0, "Published article fixtures must exist");
+	for (const route of articleRoutes) {
+		const html = read(route.slice(1));
+		const serialized = html.match(
+			/<script\b[^>]*\btype="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/,
+		)?.[1];
+		assert.ok(serialized, `${route}: Missing article structured data`);
+		const jsonLd = JSON.parse(serialized);
+		assert.equal(jsonLd["@context"], "https://schema.org", route);
+		assert.equal(jsonLd["@type"], "BlogPosting", route);
+		assert.equal(typeof jsonLd.headline, "string", route);
+		assert.ok(jsonLd.headline.trim(), `${route}: Empty article headline`);
+		assert.equal(typeof jsonLd.description, "string", route);
+		assert.equal(jsonLd.author?.["@type"], "Person", route);
+		assert.match(jsonLd.datePublished, /^\d{4}-\d{2}-\d{2}$/, route);
+		assert.doesNotMatch(serialized, /</, route);
 	}
 });
 

@@ -30,10 +30,11 @@ jobs:
         run: |
           pnpm check
           pnpm lint:ci
+          pnpm test:security
           pnpm build
           pnpm test:build
       - name: Deploy via SSH
-        uses: easingthemes/ssh-deploy@v5.0.0
+        uses: easingthemes/ssh-deploy@16bb35ed0b6e568fa7554ebdf990fdc4c046b549 # v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO"

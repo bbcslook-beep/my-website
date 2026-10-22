@@ -4,7 +4,7 @@
 
 ## 安装与预览
 
-使用 `.nvmrc` 指定的 Node.js 24.22.0 和 `package.json` 指定的 pnpm 10.34.7，在仓库根目录执行：
+使用 `.nvmrc` 指定的 Node.js 24 安全补丁版本和 `package.json` 指定的 pnpm 10.34.7，在仓库根目录执行：
 
 ```bash
 npm install --global pnpm@10.34.7
@@ -58,6 +58,7 @@ lang: zh_CN
 | `pnpm check` | 检查 Astro 与类型错误 |
 | `pnpm format` | 格式化源文件，会写入修改 |
 | `pnpm lint:ci` | 检查代码质量，不写入修改 |
+| `pnpm test:security` | 验证结构化数据和 GitHub 卡片的脚本输出安全 |
 | `pnpm build` | 构建网站和搜索索引至 `dist/` |
 | `pnpm test:build` | 验证已构建页面、RSS、搜索索引、资源及公式 |
 | `pnpm preview` | 预览已构建的网站 |
