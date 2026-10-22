@@ -19,6 +19,7 @@ pnpm install --frozen-lockfile
 pnpm check
 pnpm format
 pnpm lint:ci
+pnpm test:security
 pnpm build
 pnpm test:build
 ```

@@ -1,5 +1,9 @@
 /// <reference types="mdast" />
 import { h } from "hastscript";
+import { serializeForScript } from "../utils/script-data.mjs";
+
+const GITHUB_REPO_PATTERN =
+	/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?\/(?!\.{1,2}$)[a-z\d_.-]{1,100}$/i;
 
 /**
  * Creates a GitHub Card component.
@@ -15,11 +19,15 @@ export function GithubCardComponent(properties, children) {
 			'Invalid directive. ("github" directive must be leaf type "::github{repo="owner/repo"}")',
 		]);
 
-	if (!properties.repo?.includes("/"))
+	if (
+		typeof properties.repo !== "string" ||
+		properties.repo !== properties.repo.trim() ||
+		!GITHUB_REPO_PATTERN.test(properties.repo)
+	)
 		return h(
 			"div",
 			{ class: "hidden" },
-			'Invalid repository. ("repo" attributte must be in the format "owner/repo")',
+			'Invalid repository. ("repo" attribute must be in the format "owner/repo")',
 		);
 
 	const repo = properties.repo;
@@ -58,7 +66,9 @@ export function GithubCardComponent(properties, children) {
 		`script#${cardUuid}-script`,
 		{ type: "text/javascript", defer: true },
 		`
-      fetch('https://api.github.com/repos/${repo}', { referrerPolicy: "no-referrer" }).then(response => response.json()).then(data => {
+    (() => {
+      const repo = ${serializeForScript(repo)};
+      fetch('https://api.github.com/repos/' + repo, { referrerPolicy: "no-referrer" }).then(response => response.json()).then(data => {
         document.getElementById('${cardUuid}-description').innerText = data.description?.replace(/:[a-zA-Z0-9_]+:/g, '') || "Description not set";
         document.getElementById('${cardUuid}-language').innerText = data.language;
         document.getElementById('${cardUuid}-forks').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.forks).replaceAll("\u202f", '');
@@ -68,12 +78,13 @@ export function GithubCardComponent(properties, children) {
         avatarEl.style.backgroundColor = 'transparent';
         document.getElementById('${cardUuid}-license').innerText = data.license?.spdx_id || "no-license";
         document.getElementById('${cardUuid}-card').classList.remove("fetch-waiting");
-        console.log("[GITHUB-CARD] Loaded card for ${repo} | ${cardUuid}.")
+        console.log("[GITHUB-CARD] Loaded card for " + repo + " | ${cardUuid}.")
       }).catch(err => {
         const c = document.getElementById('${cardUuid}-card');
         c?.classList.add("fetch-error");
-        console.warn("[GITHUB-CARD] (Error) Loading card for ${repo} | ${cardUuid}.")
+        console.warn("[GITHUB-CARD] (Error) Loading card for " + repo + " | ${cardUuid}.")
       })
+    })();
     `,
 	);
 
