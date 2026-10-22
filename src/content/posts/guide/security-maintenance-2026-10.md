@@ -4,7 +4,7 @@ published: 2026-10-22
 description: '一份 PHP 漏洞报告，牵出了博客脚本输出、容器里的旧 Node、Go 编译依赖和快满的 30GB 磁盘。记录两天紧急维护中完成的修补、验证，以及仍未打完的仗。'
 tags: ['安全', '运维', 'Docker', 'PHP', 'Node.js', 'Astro']
 category: '折腾记录'
-draft: true
+draft: false
 lang: 'zh'
 ---
 
