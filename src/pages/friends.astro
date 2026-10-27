@@ -1,0 +1,115 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { url } from "../utils/url-utils";
+
+interface FriendLink {
+	name: string;
+	url: string;
+	// 可填写网站头像、Logo、QQ 头像接口，或 public 下的 /images/example.png。
+	avatar?: string;
+	// 未指定 avatar 时，填写 QQ 号即可自动使用 QQ 头像。
+	qq?: string;
+}
+
+// 添加友链时，在这里补充名称和网址；头像可选。
+const friends: FriendLink[] = [
+	{
+		name: "fabbo的个人博客",
+		url: "https://fabbo.cc",
+		avatar: "https://fabbo.cc/author_hu_4d2b4a1d3cc24c70.jpg",
+	},
+];
+
+const friendLinks = friends.map((friend) => {
+	const favicon = new URL("/favicon.ico", friend.url).href;
+	const avatar = friend.avatar
+		? friend.avatar.startsWith("/")
+			? url(friend.avatar)
+			: friend.avatar
+		: friend.qq
+			? `https://q2.qlogo.cn/headimg_dl?dst_uin=${encodeURIComponent(friend.qq)}&spec=100`
+			: favicon;
+
+	return {
+		...friend,
+		domain: new URL(friend.url).hostname,
+		avatar,
+		fallbackAvatar: avatar !== favicon ? favicon : undefined,
+	};
+});
+---
+
+<MainGridLayout title="友链" description="在这里，遇见更多有趣的朋友！">
+    <section class="card-base px-6 py-8 md:px-9" aria-labelledby="friends-title">
+        <div class="mb-7">
+            <h1 id="friends-title" class="text-90 text-2xl font-bold flex items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--btn-regular-bg)] text-[var(--primary)]" aria-hidden="true">
+                    <Icon name="material-symbols:link-rounded" class="text-2xl" />
+                </span>
+                友链
+            </h1>
+            <p class="text-50 mt-3">在这里，遇见更多有趣的朋友！</p>
+        </div>
+
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {friendLinks.map((friend) => (
+                <li class="min-w-0">
+                    <a
+                        href={friend.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group flex h-full items-center gap-4 rounded-xl bg-[var(--btn-regular-bg)] p-5 transition hover:bg-[var(--btn-regular-bg-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--primary)]"
+                    >
+                        <span class="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--card-bg)] text-2xl text-[var(--primary)]" aria-hidden="true">
+                            <Icon name="material-symbols:public" />
+                            <img
+                                src={friend.avatar}
+                                alt=""
+                                width="48"
+                                height="48"
+                                loading="lazy"
+                                decoding="async"
+                                referrerpolicy="no-referrer"
+                                data-friend-avatar
+                                data-fallback-src={friend.fallbackAvatar}
+                                class="absolute inset-0 h-full w-full bg-[var(--card-bg)] object-cover"
+                            />
+                        </span>
+                        <div class="min-w-0 flex-1">
+                            <h2 class="text-90 break-words text-lg font-bold group-hover:text-[var(--primary)]">{friend.name}</h2>
+                            <p class="text-50 mt-1 break-all text-sm">{friend.domain}</p>
+                        </div>
+                        <Icon name="fa6-solid:arrow-up-right-from-square" class="text-[var(--primary)] shrink-0 text-sm" />
+                        <span class="sr-only">（在新标签页打开）</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </section>
+</MainGridLayout>
+
+<script>
+    const handleAvatarError = (image: HTMLImageElement) => {
+        const fallback = image.dataset.fallbackSrc;
+        if (fallback) {
+            delete image.dataset.fallbackSrc;
+            image.src = fallback;
+        } else {
+            image.hidden = true;
+        }
+    };
+
+    // 捕获后续 Swup 页面中的图片错误；站点图标也失效时显示通用图标。
+    document.addEventListener('error', (event) => {
+        const image = event.target;
+        if (image instanceof HTMLImageElement && image.hasAttribute('data-friend-avatar')) {
+            handleAvatarError(image);
+        }
+    }, true);
+
+    // 兼容模块脚本执行前，缓存中的图片已加载失败的情况。
+    document.querySelectorAll<HTMLImageElement>('img[data-friend-avatar]').forEach((image) => {
+        if (image.complete && image.naturalWidth === 0) handleAvatarError(image);
+    });
+</script>

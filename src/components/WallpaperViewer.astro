@@ -21,13 +21,25 @@
         inset: 0;
         z-index: -1;
         pointer-events: none;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         opacity: 0;
         filter: blur(3px);
         transform: scale(1.02);
         transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
+
+    #my-custom-bg .wallpaper-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+    }
+
+    #my-custom-bg .wallpaper-image.visible {
+        opacity: 1;
     }
 
     #my-custom-bg.loaded {
@@ -56,7 +68,8 @@
 
     @media (prefers-reduced-motion: reduce) {
         #wallpaper-ui,
-        #my-custom-bg {
+        #my-custom-bg,
+        #my-custom-bg .wallpaper-image {
             transition: none;
         }
     }
@@ -89,13 +102,44 @@
             }
         };
 
-        // 只请求一次图片；先注册回调，再设置 src，兼容缓存命中。
-        const image = new Image();
-        image.onload = () => {
-            background.style.backgroundImage = `url('${image.src}')`;
-            background.classList.add('loaded');
+        let currentImage: HTMLImageElement | null = null;
+        let imageRequest = 0;
+
+        const loadWallpaper = async (source: string) => {
+            const request = ++imageRequest;
+            const image = new Image();
+            image.alt = '';
+            image.className = 'wallpaper-image';
+            image.decoding = 'async';
+            image.src = source;
+
+            // 直接展示同一张已解码的图片，避免随机接口被 CSS 再次请求。
+            try {
+                await image.decode();
+            } catch {
+                return;
+            }
+            if (request !== imageRequest) return;
+
+            // 保留当前图，另一层准备新图；加载失败时不会清空原有背景。
+            for (const layer of background.querySelectorAll('.wallpaper-image')) {
+                if (layer !== currentImage) layer.remove();
+            }
+            background.append(image);
+
+            // 先绘制透明层，再开始过渡，缓存命中时也不会跳过淡入首帧。
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                if (request !== imageRequest) {
+                    image.remove();
+                    return;
+                }
+                currentImage?.classList.remove('visible');
+                image.classList.add('visible');
+                currentImage = image;
+                background.classList.add('loaded');
+            }));
         };
-        image.src = `https://papi.bbcslook.top/?t=${Date.now()}`;
+        void loadWallpaper(`https://papi.bbcslook.top/?t=${Date.now()}`);
 
         document.addEventListener('dblclick', (event) => {
             if (!(event.target instanceof Element)) return;

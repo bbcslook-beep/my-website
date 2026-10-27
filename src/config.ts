@@ -48,6 +48,10 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
+		{
+			name: "友链",
+			url: "/friends/",
+		},
 		//	{
 		//		name: "门户站点",
 		//		url: "", // Internal links should not include the base path, as it is automatically added
