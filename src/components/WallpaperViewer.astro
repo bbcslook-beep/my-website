@@ -5,7 +5,8 @@
 <div id="my-custom-bg" aria-hidden="true"></div>
 <button id="wallpaper-exit" type="button" aria-label="退出赏图模式" hidden></button>
 
-<style is:global>
+<!-- 样式与持久背景层放在一起，避免静态站点切页时被 head 替换移除。 -->
+<style is:inline>
     #wallpaper-ui {
         isolation: isolate;
         opacity: 1;
@@ -21,7 +22,7 @@
         inset: 0;
         z-index: -1;
         pointer-events: none;
-        opacity: 0;
+        opacity: 0.6;
         filter: blur(3px);
         transform: scale(1.02);
         transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out, transform 0.8s ease-in-out;
@@ -34,16 +35,7 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
-        opacity: 0;
-        transition: opacity 0.8s ease-in-out;
-    }
-
-    #my-custom-bg .wallpaper-image.visible {
         opacity: 1;
-    }
-
-    #my-custom-bg.loaded {
-        opacity: 0.6;
     }
 
     body.bg-view-mode #my-custom-bg.loaded {
@@ -80,7 +72,9 @@
     const background = document.getElementById('my-custom-bg');
     const exitButton = document.getElementById('wallpaper-exit');
 
-    if (ui && background && exitButton) {
+    // 生产构建可能内联此脚本，Swup 会在导航时重新执行；状态必须留在原实例。
+    if (ui && background && exitButton && !background.dataset.wallpaperInitialized) {
+        background.dataset.wallpaperInitialized = 'true';
         let previousFocus: HTMLElement | null = null;
 
         const setViewing = (viewing: boolean) => {
@@ -104,14 +98,40 @@
 
         let currentImage: HTMLImageElement | null = null;
         let imageRequest = 0;
+        let transitionComplete = Promise.resolve();
+        let currentPage = location.pathname + location.search;
 
-        const loadWallpaper = async (source: string) => {
+        const crossfade = async (image: HTMLImageElement) => {
+            const previousImage = currentImage;
+            background.append(image);
+            currentImage = image;
+            background.classList.add('loaded');
+
+            // 下层旧图保持 opacity: 1，只让覆盖在上面的新图逐渐显现。
+            // 逐帧动画不依赖外部样式表的加载时机，静态部署与开发环境一致。
+            try {
+                const animation = image.animate(
+                    [{ opacity: 0 }, { opacity: 1 }],
+                    {
+                        duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1000,
+                        easing: 'ease-in-out',
+                    },
+                );
+                await animation.finished;
+            } catch {
+                // 动画被取消或浏览器不支持时，保留已加载的新图。
+            } finally {
+                previousImage?.remove();
+            }
+        };
+
+        const loadWallpaper = async () => {
             const request = ++imageRequest;
             const image = new Image();
             image.alt = '';
             image.className = 'wallpaper-image';
             image.decoding = 'async';
-            image.src = source;
+            image.src = `https://papi.bbcslook.top/?t=${Date.now()}-${request}`;
 
             // 直接展示同一张已解码的图片，避免随机接口被 CSS 再次请求。
             try {
@@ -119,27 +139,14 @@
             } catch {
                 return;
             }
+            // 快速连续导航时，等正在显示的过渡结束，再展示最新请求的图片。
+            // 不移除仍在叠加中的图层，始终保留完整、不透明的底图。
+            await transitionComplete;
             if (request !== imageRequest) return;
-
-            // 保留当前图，另一层准备新图；加载失败时不会清空原有背景。
-            for (const layer of background.querySelectorAll('.wallpaper-image')) {
-                if (layer !== currentImage) layer.remove();
-            }
-            background.append(image);
-
-            // 先绘制透明层，再开始过渡，缓存命中时也不会跳过淡入首帧。
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                if (request !== imageRequest) {
-                    image.remove();
-                    return;
-                }
-                currentImage?.classList.remove('visible');
-                image.classList.add('visible');
-                currentImage = image;
-                background.classList.add('loaded');
-            }));
+            transitionComplete = crossfade(image);
+            await transitionComplete;
         };
-        void loadWallpaper(`https://papi.bbcslook.top/?t=${Date.now()}`);
+        void loadWallpaper();
 
         document.addEventListener('dblclick', (event) => {
             if (!(event.target instanceof Element)) return;
@@ -156,6 +163,12 @@
         // 浏览器前进/后退也可能在赏图时触发站内导航。
         const setupNavigation = () => {
             window.swup.hooks.on('visit:start', () => setViewing(false));
+            window.swup.hooks.on('page:view', () => {
+                const nextPage = location.pathname + location.search;
+                if (nextPage === currentPage) return;
+                currentPage = nextPage;
+                void loadWallpaper();
+            });
         };
         if (window.swup) setupNavigation();
         else document.addEventListener('swup:enable', setupNavigation, { once: true });

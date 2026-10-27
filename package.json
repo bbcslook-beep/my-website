@@ -15,7 +15,7 @@
 		"lint": "biome check --write ./src",
 		"preinstall": "node scripts/check-package-manager.mjs",
 		"lint:ci": "biome ci ./src",
-		"test:build": "node --test tests/build.test.mjs",
+		"test:build": "node --test tests/build.test.mjs tests/wallpaper.test.mjs",
 		"test:security": "node --test tests/security.test.mjs"
 	},
 	"dependencies": {

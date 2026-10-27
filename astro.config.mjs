@@ -36,6 +36,8 @@ export default defineConfig({
 	integrations: [
 		swup({
 			theme: false,
+			// Keep the first navigation inside Swup even while external images are loading.
+			loadOnIdle: false,
 			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
