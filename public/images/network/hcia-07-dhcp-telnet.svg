@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620" role="img" aria-labelledby="title desc">
+  <title id="title">DHCP 与 Telnet 双网段实验拓扑</title>
+  <desc id="desc">AR1 的 GE0/0/0 接口为 192.168.1.1/24，连接 LSW1 和通过 DHCP 获取地址的 PC1、PC2；GE0/0/1 接口为 192.168.2.1/24，连接 LSW2 和通过 DHCP 获取地址的 PC3、PC4。</desc>
+  <defs>
+    <style>
+      text { font-family: 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+      .title { font-size: 25px; font-weight: 700; fill: #17243b; }
+      .label { font-size: 19px; font-weight: 700; fill: #17243b; }
+      .detail { font-size: 16px; fill: #46566e; }
+      .small { font-size: 15px; fill: #46566e; }
+      .line { fill: none; stroke: #7b8ca4; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="960" height="620" rx="24" fill="#f5f8fc"/>
+  <text x="40" y="48" class="title">四台 PC 自动获取地址，一台 AR 提供 DHCP 与 Telnet</text>
+  <rect x="40" y="226" width="420" height="306" rx="20" fill="#e8f0ff" stroke="#bed2f7"/>
+  <rect x="500" y="226" width="420" height="306" rx="20" fill="#e3f5f1" stroke="#a9d9ce"/>
+  <text x="110" y="263" class="label">LAN1 · 192.168.1.0/24</text>
+  <text x="570" y="263" class="label">LAN2 · 192.168.2.0/24</text>
+  <path d="M370 134H80V328H160M590 134H880V328H800" class="line"/>
+  <path d="M250 361V394H145V425M250 394H355V425M710 361V394H605V425M710 394H815V425" class="line"/>
+  <rect x="370" y="87" width="220" height="94" rx="18" fill="#253e63"/>
+  <text x="480" y="122" text-anchor="middle" font-size="24" font-weight="700" fill="#fff">AR1</text>
+  <text x="480" y="153" text-anchor="middle" font-size="16" fill="#dce9ff">DHCP Server + Telnet</text>
+  <text x="110" y="174" class="detail">GE0/0/0</text>
+  <text x="110" y="200" class="label">192.168.1.1/24</text>
+  <text x="615" y="174" class="detail">GE0/0/1</text>
+  <text x="615" y="200" class="label">192.168.2.1/24</text>
+  <rect x="160" y="295" width="180" height="66" rx="14" fill="#fff" stroke="#87aae1" stroke-width="2"/>
+  <rect x="620" y="295" width="180" height="66" rx="14" fill="#fff" stroke="#6eb6a7" stroke-width="2"/>
+  <text x="250" y="324" text-anchor="middle" class="label">LSW1</text>
+  <text x="250" y="347" text-anchor="middle" class="small">二层交换机</text>
+  <text x="710" y="324" text-anchor="middle" class="label">LSW2</text>
+  <text x="710" y="347" text-anchor="middle" class="small">二层交换机</text>
+  <g fill="#fff" stroke="#87aae1" stroke-width="2">
+    <rect x="82" y="425" width="126" height="82" rx="12"/>
+    <rect x="292" y="425" width="126" height="82" rx="12"/>
+  </g>
+  <g fill="#fff" stroke="#6eb6a7" stroke-width="2">
+    <rect x="542" y="425" width="126" height="82" rx="12"/>
+    <rect x="752" y="425" width="126" height="82" rx="12"/>
+  </g>
+  <text x="145" y="457" text-anchor="middle" class="label">PC1</text>
+  <text x="355" y="457" text-anchor="middle" class="label">PC2</text>
+  <text x="605" y="457" text-anchor="middle" class="label">PC3</text>
+  <text x="815" y="457" text-anchor="middle" class="label">PC4</text>
+  <text x="145" y="486" text-anchor="middle" class="detail">DHCP</text>
+  <text x="355" y="486" text-anchor="middle" class="detail">DHCP</text>
+  <text x="605" y="486" text-anchor="middle" class="detail">DHCP</text>
+  <text x="815" y="486" text-anchor="middle" class="detail">DHCP</text>
+  <text x="480" y="565" text-anchor="middle" class="detail">每侧保留 .1～.20；动态分配 .21～.254；租期为 1 天</text>
+  <text x="480" y="593" text-anchor="middle" class="small">两台交换机之间不另接链路；Telnet 客户端可按正文接入 LSW1</text>
+</svg>
