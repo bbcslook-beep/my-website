@@ -268,3 +268,5 @@ B 用自己的网关把回复送回 A 所在网段
 - [第三篇：子网划分、VLSM 与 CIDR](/posts/guide/hcia-03-subnetting-cidr/)
 - [第四篇：TCP/IP、握手与 MTU/MSS](/posts/guide/hcia-04-tcpip-tcp-mtu/)
 - [第五篇：VRP 管理与配置保存](/posts/guide/hcia-05-vrp-management/)
+
+继续实验：[第七篇：DHCP 与 Telnet 实验，从手动建池到远程登录](/posts/guide/hcia-07-dhcp-telnet-lab/)。
